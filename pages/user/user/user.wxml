@@ -15,6 +15,6 @@
   <tap-action type="card" bind:tap="toUpdateUserInfo">
     <view class="menu-item menu-item--access">修改用户信息</view>
   </tap-action>
-  <view class="menu-item">权限 <text class="menu-item__value">{{permission_duration || '游客'}}</text></view>
-  <view class="menu-item">版本 <text class="menu-item__value">{{version || '2.2.2'}}</text></view>
+  <view class="menu-item">权限 <text class="menu-item__value">{{permission_duration}}</text></view>
+  <view class="menu-item">版本 <text class="menu-item__value">{{version}}</text></view>
 </view>

@@ -6,8 +6,8 @@ const loadError = require('../../../behaviors/loadError')
 Page({
   behaviors: [pageGuard.behavior, pageLoading, loadError],
   data: {
-    version: '1.4.37',
-    permission_duration: ''
+    version: '1.0.1',
+    permission_duration: '游客'
   },
   onShow: function () {
     this.getUser(this)
@@ -29,10 +29,6 @@ Page({
   getUser() {
     this.hideLoadError()
     api.request(this, '/user/v1/user/info', {}, true).then(() => {
-      const user = getApp().globalData.user || {}
-      this.setData({
-        permission_duration: user.permission_duration || ''
-      })
       this.setDataReady()
       this.finishLoading()
     }).catch(() => {
