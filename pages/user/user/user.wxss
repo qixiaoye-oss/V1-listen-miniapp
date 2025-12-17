@@ -72,3 +72,7 @@
   top: 20px;
   right: 15px;
 }
+
+.menu-item__value {
+  color: #00A6ED;
+}

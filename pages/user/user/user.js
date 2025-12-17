@@ -6,7 +6,8 @@ const loadError = require('../../../behaviors/loadError')
 Page({
   behaviors: [pageGuard.behavior, pageLoading, loadError],
   data: {
-    version: '1.4.37'
+    version: '1.0.1',
+    permission_duration: '游客'
   },
   onShow: function () {
     this.getUser(this)
@@ -15,7 +16,7 @@ Page({
     const tabBarHeight = systemInfo.windowHeight - systemInfo.statusBarHeight;
     const miniProgram = wx.getAccountInfoSync();
     this.setData({
-      version: miniProgram.miniProgram.version,
+      version: miniProgram.miniProgram.version || '1.0.1',
       bottom: tabBarHeight - 90
     })
   },
