@@ -16,7 +16,7 @@ Page({
     const tabBarHeight = systemInfo.windowHeight - systemInfo.statusBarHeight;
     const miniProgram = wx.getAccountInfoSync();
     this.setData({
-      version: miniProgram.miniProgram.version,
+      version: miniProgram.miniProgram.version || '1.0.1',
       bottom: tabBarHeight - 90
     })
   },
