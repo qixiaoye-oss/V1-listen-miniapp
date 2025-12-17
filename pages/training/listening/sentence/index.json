@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "sentence-block": "/components/sentence-block/sentence-block"
+  }
+}

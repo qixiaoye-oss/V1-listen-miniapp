@@ -1,0 +1,48 @@
+<import src="/templates/page-loading.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<wxs src="/utils/util.wxs" module="wxsUtil" />
+<!-- 骨架屏 -->
+<skeleton type="list" loading="{{loading}}" rows="5" />
+<view class="report-card-page" wx:if="{{_isDataReady}}">
+  <!-- padding-bottom = buttonGroupHeight，确保内容底边距离按钮组顶边 15px -->
+  <view class="report-card-page__content" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : ''}}">
+    <block wx:for="{{parts}}" wx:for-item="part" wx:for-index="partIndex" wx:key="id">
+      <view class="header_container">
+        <view class="header_title">{{part.partNum}}</view>
+      </view>
+      <view class="report-card">
+        <block wx:for="{{part.groups}}" wx:for-item="group" wx:for-index="groupIndex" wx:key="id">
+          <view class="report-card__item" wx:for="{{group.questions}}" wx:key="id">
+            <view class="question">
+              <view class="question__no">{{item.qNumber}}</view>
+              <view class="question__user-answer {{item.state != 1?'answer_wrong':''}}">{{wxsUtil.formatNull(item.userAnswer,'未填写')}}</view>
+              <tap-action icon="correct" wx:if="{{item.state == 1}}">
+                <image src="/images/v2/correct_bt.png"></image>
+              </tap-action>
+              <tap-action icon="flag" wx:else>
+                <image src="/images/v2/wrong.png"></image>
+              </tap-action>
+              <tap-action icon="next" bind:tap="change" data-part-index="{{partIndex}}" data-group-index="{{groupIndex}}" data-question-index="{{index}}">
+                <image src="/images/v2/next_bt.png"></image>
+              </tap-action>
+            </view>
+            <view class="right-answers">{{item.rightAnswer}}</view>
+          </view>
+        </block>
+      </view>
+    </block>
+  </view>
+</view>
+<view class="btn-page-bottom" wx:if="{{_isDataReady}}">
+  <view class="btn-group-hint-banner" data-icon="flag">
+    <text wx:if="{{correctness > 71}}">非常棒！有7+的潜质！只分析错题即可！</text>
+    <text wx:if="{{correctness > 30 && correctness < 70}}">还不错！分数预估6.5分上下！如果有蒙对的题，建议整篇精听，并做好标注！</text>
+    <text wx:if="{{correctness < 30}}">不太好！分数预估6分以下！必须整篇精听，并做好标注！</text>
+  </view>
+  <view class="btn-group-single">
+    <tap-action icon="save" bind:tap="returnPage">
+      <view>保存并返回</view>
+      <image src="/images/v2/save_bt.png"></image>
+    </tap-action>
+  </view>
+</view>

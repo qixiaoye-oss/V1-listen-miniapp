@@ -1,0 +1,64 @@
+<import src="/templates/page-loading.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<!-- 骨架屏 -->
+<skeleton type="list" loading="{{loading}}" rows="5" />
+<view class="main-page" wx:if="{{!loading && list.length > 0}}">
+  <!-- <view class="set-settings-entry" bind:tap="toPage" hover-class="tap-active" hover-stay-time="100">
+    <view class="set-settings-entry__button" style="background: rgba(248, 49, 47, 0.15);">
+      <image src="/images/v2/flag_bt.png"></image>
+      <text>标签显示</text>
+    </view>
+  </view> -->
+  <view class="main-item" wx:for="{{list}}" wx:key="id">
+    <view class="main-item__title" style="background: {{item.colorRgba}};">
+      <image class="main-item__title--icon" wx:if="{{item.iconUrl}}" src="{{item.iconUrl}}"></image>
+      <view class="main-item__title--text">{{item.title}}</view>
+    </view>
+    <block wx:for="{{item.list}}" wx:for-item="chapter" wx:for-index="chapterIndex" wx:key="id">
+      <tap-action type="card" bind:tap="toWriting" data-module-index="{{index}}" data-unit-index="{{chapterIndex}}">
+        <view class="sub-item" style="border-color: {{chapter.colorRgb}};">
+          <view class="sub-item__header">
+            <view class="sub-item__title" style="background: {{chapter.colorRgba}};">
+              <image class="sub-item__title--icon" wx:if="{{chapter.iconUrl}}" src="{{chapter.iconUrl}}" />
+              <view class="sub-item__title--text" wx:if="{{chapter.title}}">{{chapter.title}}</view>
+              <!-- <view class="sub-item__type-badge">简</view> -->
+            </view>
+          </view>
+          <view class="sub-item__intervals" style="background: {{chapter.colorRgb}};"></view>
+          <view class="sub-item__footer">
+          <block wx:if="{{chapter.statusExercise == 0}}">
+            <view class="tag tag__multi tag__multi--gray">
+              <view>正确率（未作）</view>
+              <view class="tag__intervals"></view>
+              <view>平均{{chapter.averageAccuracy}}%</view>
+            </view>
+          </block>
+          <block wx:if="{{chapter.statusExercise == 1}}">
+            <view class="tag tag__multi tag__multi--green">
+              <view>正确率{{chapter.accuracy}}%</view>
+              <view class="tag__intervals"></view>
+              <view>平均{{chapter.averageAccuracy}}%</view>
+            </view>
+          </block>
+          <view class="tag tag__multi tag__multi--orange" wx:if="{{chapter.statusIntensive == -1}}">
+            <view>需精听</view>
+          </view>
+          <view class="tag tag__multi tag__multi--gray" wx:if="{{chapter.statusIntensive == 0}}">
+            <view>未精听</view>
+          </view>
+          <view class="tag tag__multi tag__multi--green" wx:if="{{chapter.statusIntensive == 1}}">
+            <view>已精听</view>
+            <view class="tag__intervals"></view>
+            <view>{{chapter.intensiveCount}}</view>
+          </view>
+          <view class="tag tag__multi tag__multi--green" wx:if="{{chapter.statusIntensive == 2}}">
+            <view>无需精听</view>
+          </view>
+        </view>
+        </view>
+      </tap-action>
+    </block>
+  </view>
+</view>
+<view class="page-safe-area"></view>
+<view class="no-data" wx:if="{{!loading && list.length==0}}">暂无数据</view>

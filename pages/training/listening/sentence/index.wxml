@@ -1,0 +1,36 @@
+<import src="/templates/page-loading.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<wxs src="/utils/util.wxs" module="wxsUtil" />
+<!-- 骨架屏 -->
+<skeleton type="list" loading="{{loading}}" rows="5" />
+<scroll-view class="base_view" scroll-y scroll-into-view="{{scrollIntoId}}" scroll-with-animation wx:if="{{!loading}}">
+  <view class="layout_grid">
+    <block wx:for="{{list}}" wx:key="id" wx:for-item="item" wx:for-index="idx">
+      <view id="ID{{item.id}}" class="list_container {{item.status == 0?'list_undone':''}}  {{scrollIntoId === 'ID'+item.id ? 'select' : ''}}">
+        <view class="listening_header ">
+          <view class="list_index">{{idx+1}}/{{list.length}}</view>
+          <view wx:if="{{item.status == 1}}"></view>
+          <view wx:if="{{item.status == 0}}">未收听</view>
+        </view>
+        <view class="listening_content">
+          <sentence-block
+            list="{{item.list}}"
+            translate="{{wxsUtil.getTranslate(item)}}"
+          />
+        </view>
+        <view class="btn-pos-right">
+          <tap-action icon="flag" wx:if="{{item.label}}">
+            <image class="label_flag" src="/images/v2/flag_bt.png"></image>
+          </tap-action>
+          <tap-action icon="play" bind:tap="playAudio" data-idx="{{idx}}">
+            <image src="/images/v2/pause_bt.png" wx:if="{{item.audioPlay =='play'}}"></image>
+            <image src="/images/v2/play_bt.png" wx:else></image>
+          </tap-action>
+          <tap-action icon="goto" bind:tap="toDetail" data-idx="{{idx}}">
+            <image src="/images/v2/goto_bt.png"></image>
+          </tap-action>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>

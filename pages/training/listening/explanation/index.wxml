@@ -1,0 +1,75 @@
+<import src="/templates/page-loading.wxml" />
+<import src="/templates/audio-loading.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<template is="audioLoading" data="{{audioDownProgress}}" />
+<wxs src="/utils/util.wxs" module="wxsUtil" />
+<!-- 骨架屏 -->
+<skeleton type="detail" loading="{{loading}}" />
+<view class="explain" wx:if="{{_isDataReady}}">
+  <view class="explain__question">
+    <view>
+      <view class="tag tag--transparent">题目</view>
+    </view>
+    <view class="explain__question--option">
+      <view><text user-select='true'>{{wxsUtil.formatNull(question.content,'')}}</text></view>
+      <image wx:if="{{question.imageUrl}}" src="{{question.imageUrl}}" style="width: 560rpx;" mode='widthFix' bind:tap="checkImg"></image>
+      <view wx:for="{{question.options}}" wx:key="item" class="explain__question--option-item">
+        <text class="explain__question--option-choice">{{item.choice}}</text>
+        <text user-select='true'>{{wxsUtil.formatNull(item.content,'')}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="explain__article" wx:if="{{question.sentenceList.length > 0}}">
+    <view>
+      <view class="tag tag--transparent">原文</view>
+    </view>
+    <view class="explain__article--content">
+      <view wx:for="{{question.sentenceList}}" wx:key="item" wx:for-item="sentence" wx:for-index="sentenceIdx">
+        <sentence-block
+          list="{{sentence.list}}"
+          translate="{{wxsUtil.getTranslate(sentence)}}"
+          hidden="{{!showHidden}}"
+          activeIndex="{{currentSentenceIdx === sentenceIdx ? playingSmallIndex : -1}}"
+          sentenceIdx="{{sentenceIdx}}"
+          bind:segmenttap="listenSentenceAgain"
+        />
+        <view class="font_color_base" style="margin-bottom: 15px;" wx:if="{{sentence.keyPoints}}">{{wxsUtil.formatNull(sentence.keyPoints,'')}}</view>
+        <view class="sentence_analysis_cell" wx:if="{{sentence.analysisList.length > 0}}">
+          <view wx:for="{{sentence.analysisList}}" wx:for-item="analysis" wx:key="item" class="layout_flex ">
+            <view class="left_cell model_name">
+              <text user-select="{{true}}" class="col1" wx:if="{{analysis.labelsOne}}">{{analysis.labelsOne}}</text>
+              <text user-select="{{true}}" class="col2" wx:if="{{analysis.labelsTwo}}">{{analysis.labelsTwo}}</text>
+            </view>
+            <view class="content {{'plv_' + analysis.level}}"><text user-select='true'>{{analysis.content}}</text></view>
+          </view>
+        </view>
+      </view>
+      <view class="btn-group-embedded">
+        <tap-action icon="play" bind:tap="{{!audioPlay ? 'play' : 'stopAudio'}}">
+          <image src="/images/v2/play_bt.png" wx:if="{{!audioPlay}}"></image>
+          <image src="/images/v2/pause_bt.png" wx:if="{{audioPlay}}"></image>
+        </tap-action>
+        <tap-action icon="visible" bind:tap="showHidden">
+          <image wx:if="{{!showHidden}}" src="/images/v2/hidden_bt.png"></image>
+          <image wx:else src="/images/v2/visible_bt.png"></image>
+        </tap-action>
+      </view>
+    </view>
+  </view>
+  <view class="explain__analysis" wx:if="{{question.analysisList.length > 0}}">
+    <view wx:for="{{question.analysisList}}" wx:key="item" wx:for-item="analysis" class="layout_flex" style="gap: 10px;">
+      <view style="min-width: 36px;">
+        <view class="tag col1" user-select='true' wx:if="{{analysis.labelsOne}}">{{analysis.labelsOne}}</view>
+        <view class="tag col2" user-select='true' wx:if="{{analysis.labelsTwo}}">{{analysis.labelsTwo}}</view>
+      </view>
+      <view class="right_cell content {{'plv_' + analysis.level}}"><text user-select='true'>{{analysis.content}}</text></view>
+    </view>
+  </view>
+  <view class="explain__analysis--ordinary" wx:else>
+    <view class="tag tag--transparent">解析</view>
+    <view class="content">
+      <!-- <text user-select='true'>{{wxsUtil.formatNull(question.analysisText,'')}}</text> -->
+      <rich-text nodes="{{question.analysisText}}"></rich-text>
+    </view>
+  </view>
+</view>

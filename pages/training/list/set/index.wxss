@@ -1,0 +1,40 @@
+/* Set 列表页样式 */
+
+/* ========== 1. 设置入口 ========== */
+.set-settings-entry {
+  display: flex;
+  align-items: center;
+}
+
+.set-settings-entry__button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 15px 5px;
+  border-radius: 9px;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.set-settings-entry__button image {
+  flex-shrink: 0;
+  width: 25px;
+  height: 25px;
+}
+
+/* ========== 2. 列表项覆盖样式 ========== */
+.sub-item {
+  border-radius: 6px;
+}
+
+.sub-item__type-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  padding: 3px;
+  font-size: 8px;
+  text-align: center;
+  border-radius: 3px;
+  color: #ffffff;
+  background: #00d26a;
+}

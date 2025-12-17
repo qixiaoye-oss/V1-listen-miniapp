@@ -1,0 +1,3 @@
+<import src="/templates/page-loading.wxml"/>
+<template is="pageLoading" data="{{loading, loadProgress}}"/>
+<toggle-control-group groups="{{groups}}" bind:change="onToggleChange" />

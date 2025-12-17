@@ -1,0 +1,33 @@
+<view class="toggle-control-group">
+  <view class="group" wx:for="{{groups}}" wx:key="index" wx:for-item="group" wx:for-index="groupIndex">
+    <view class="group__item group__item--header" wx:if="{{group.title}}">
+      <view class="group__title" style="background: {{group.bgColor}};">
+        <image class="group__title--icon" src="{{group.icon}}" wx:if="{{group.icon}}"></image>
+        <view class="font">{{group.title}}</view>
+      </view>
+    </view>
+    <view class="group__intervals" wx:if="{{group.title}}"></view>
+    <block wx:for="{{group.items}}" wx:key="key" wx:for-item="item" wx:for-index="itemIndex">
+      <view class="group__item">
+        <view class="group__item--content">
+          <view class="font">{{item.label}}</view>
+          <view class="tip" wx:if="{{item.tip}}">{{item.tip}}</view>
+        </view>
+        <view class="group__item--state">
+          <view class="switch__tag tag--green" wx:if="{{item.value == 'open' || item.value == true}}">打开</view>
+          <view class="switch__tag tag--gray" wx:if="{{item.value != 'open' && item.value != true}}">关闭</view>
+          <switch
+            class="switch-original"
+            checked="{{item.value == 'open' || item.value == true}}"
+            bindchange="handleSwitchChange"
+            data-group-index="{{groupIndex}}"
+            data-item-index="{{itemIndex}}"
+            data-key="{{item.key}}"
+            color="{{switchColor}}"
+          ></switch>
+        </view>
+      </view>
+      <view class="group__intervals" wx:if="{{itemIndex < group.items.length - 1}}"></view>
+    </block>
+  </view>
+</view>

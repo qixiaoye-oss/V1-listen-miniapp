@@ -1,0 +1,152 @@
+/* 基础样式 */
+page {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  /* 高度由 JS 动态计算，通过 inline style 设置 */
+  /* 初始值使用 CSS 变量作为降级 */
+  box-sizing: border-box;
+}
+
+.base-container {
+  flex-shrink: 0;
+  font-size: 15px;
+  padding: 20px 20px 15px 20px;
+  color: var(--theme-color);
+}
+
+text {
+  line-height: 1;
+}
+
+/* 提醒样式 */
+.play-tips-cell {
+  margin-bottom: 10px;
+}
+
+
+/* 内容样式 */
+.pad_15r {
+  margin: 0 7px;
+}
+
+.weui-actionsheet__cell_warn {
+  color: #000000;
+  border-top: 2px solid #d7d7d7;
+}
+
+/* 正文内容样式 */
+.body {
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+.label-container {
+  width: 100%;
+  height: 100%;
+  padding-inline: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.swiper-container {
+  height: 100%;
+  width: 100%;
+}
+
+.swiper-item-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: translate(0%, -2px) translateZ(0%，0px) !important;
+}
+
+.paragraph-cell {
+  flex: 1;
+  border: 1px solid var(--solid-border-color);
+  border-radius: 9px;
+  width: 100%;
+  /* width: calc(100% - 20px); */
+  box-sizing: border-box;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.paragraph-content-cell {
+  flex: 1;
+}
+
+.writing-cell {
+  position: relative;
+  border: 1px dashed var(--dashed-border-color);
+  padding: 15px;
+  line-height: 1.4;
+}
+
+.writing-label {
+  font-size: 12px;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.3);
+  margin-bottom: 12px;
+}
+
+textarea {
+  width: 100%;
+  font-size: 16px;
+  line-height: 1.4;
+  position: relative;
+  z-index: 10000 !important;
+}
+
+.pl-class {
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  position: absolute;
+  top: 40px;
+  left: 15px;
+  z-index: 10;
+}
+
+.notes-save-status {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+/* 按钮部分 */
+.playback-rate {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  width: 30px;
+  font-size: 10px;
+  border-radius: 3px;
+  text-align: center;
+  background: var(--background-color-3);
+}
+
+/* 按钮样式覆盖 */
+
+.btn-group-split__header .btn-action:last-child {
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.btn-group-split__footer .btn-action {
+  flex-shrink: 0;
+  margin-left: auto;
+}

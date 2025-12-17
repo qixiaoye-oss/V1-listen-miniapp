@@ -1,0 +1,66 @@
+<wxs src="/utils/util.wxs" module="wxsUtil" />
+<view class="label-list-base-container">
+  <view class="outer-frame">
+    <scroll-view scroll-y class="label-list-container" enhanced enable-flex show-scrollbar="{{false}}">
+      <view class="list-top-spacer"></view>
+      <view class="label-item-cell" wx:for="{{list}}" wx:key="item">
+      <view class="big-sentence-cell {{item.active ? 'active' : ''}}">
+        <view class="sentence-label-cell">
+          <view class="content-cell">
+            <sentence-block
+              list="{{item.list}}"
+              translate="{{wxsUtil.getTranslate(item)}}"
+              activeIndex="{{nowPlayAudio == index ? nowPlaySmallAudio : -1}}"
+              hidden="{{!item.show}}"
+              sentenceIdx="{{index}}"
+              bind:segmenttap="onSegmentTap"
+              data-sentence-index="{{index}}"
+            />
+          </view>
+          <view class="answer-cell" bind:tap="toEditPage" data-item="{{item}}">
+            <view class="answer-title">我的听写</view>
+            <view class="{{!item.show ? 'hidden__':''}}">
+              <view class="label-content-cell {{!item.show ? 'hidden_':''}}">
+                <rich-text nodes="{{item.content}}"></rich-text>
+              </view>
+            </view>
+            <view class="edit-but">点击开始订正</view>
+          </view>
+        </view>
+        <view class="buts-cell">
+          <view class="state but-warning warning-bg" wx:if="{{item.status === '2'}}">需要再次复习</view>
+          <view class="state but-success success-bg" wx:if="{{item.status === '1'}}">有效复习</view>
+          <view class="tag tag__multi--green" wx:if="{{item.reviseContent}}">有订正</view>
+          <view class="btn-pos-right">
+            <tap-action icon="play" bind:tap="playAudio" data-index="{{index}}">
+              <image src="/images/v2/pause_bt.png" data-value="pause" wx:if="{{nowPlayAudio == index}}"></image>
+              <image src="/images/v2/play_bt.png" data-value="play" wx:else></image>
+            </tap-action>
+            <tap-action icon="visible" bind:tap="showContent" data-index="{{index}}">
+              <image src="/images/v2/visible_bt.png" wx:if="{{item.show}}"></image>
+              <image src="/images/v2/hidden_bt.png" wx:else></image>
+            </tap-action>
+          </view>
+        </view>
+      </view>
+      <view class="again-buts-cell" bind:tap="againButChange" data-index="{{index}}" wx:if="{{item.againFun}}">
+        <view class="again-but flex_row_cen but-warning {{item.status === '2'?'but-animation warning-bg':''}}" data-value="2">需要再次复习</view>
+        <view class="again-but flex_row_cen but-success {{item.status === '1'?'but-animation success-bg':''}}" data-value="1">无需再次复习</view>
+      </view>
+      <view class="item-spacing"></view>
+      </view>
+      <!-- 底部按钮组（随列表滚动） -->
+      <view class="footer-btn-group">
+        <view class="footer-btn-group__header btn-text-content">保持精听，越来越好</view>
+        <view class="footer-btn-group__divider"></view>
+        <view class="footer-btn-group__footer">
+          <tap-action icon="save" bind:tap="onReturnTap">
+            <view>保存并返回</view>
+            <image src="/images/v2/save_bt.png"></image>
+          </tap-action>
+        </view>
+      </view>
+      <view class="list-bottom-spacer"></view>
+    </scroll-view>
+  </view>
+</view>

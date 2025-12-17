@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "toggle-control-group": "/components/toggle-control-group/index"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "mp-html": "/components/mp-html/index",
+    "sentence-block": "/components/sentence-block/sentence-block"
+  }
+}

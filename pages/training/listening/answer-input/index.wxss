@@ -1,0 +1,55 @@
+.header_container {
+  border: var(--btn-border-theme-1);
+  box-sizing: border-box;
+  border-radius: 9px;
+  margin-bottom: 15px;
+  line-height: 1;
+}
+
+.header_title {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 15px;
+}
+
+.parctice {
+  border: 1px solid var(--theme-color);
+  border-radius: 9px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.question {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+.question__num {
+  background-color: var(--theme-bcakground-color);
+  color: var(--theme-color);
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: 6px;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.question__input {
+  width: 0;
+  flex: 1;
+}
+
+/* 页面内容区域 - 动态 padding-bottom 由 buttonGroupHeight behavior 计算 */
+.page-content {
+  box-sizing: border-box;
+}

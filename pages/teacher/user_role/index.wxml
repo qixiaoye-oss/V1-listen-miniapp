@@ -1,0 +1,40 @@
+<import src="/templates/page-loading.wxml"/>
+<template is="pageLoading" data="{{loading, loadProgress}}"/>
+<view>
+  <view class="flex_row_bet search_container">
+    <view class="flex_row_bet search_cell">
+      <icon type="search" size="24"></icon>
+      <input type="text" class="search_input_cell" placeholder="请输入学员姓名或考号" value="{{inputVal}}" bindinput="inputTyping" />
+      <icon type="clear" size="24" wx:if="{{inputVal.length > 0}}" bindtap="clearInput"></icon>
+    </view>
+    <tap-action type="card" bind:tap="hideInput">
+      <view class="search_but_cell">取消</view>
+    </tap-action>
+  </view>
+</view>
+<view class="interval"></view>
+<scroll-view scroll-y="{{true}}" class="user_list_container" hidden="{{hideScroll}}">
+  <view class="prompt">请选择</view>
+  <view wx:for="{{userList}}" wx:key="item">
+    <tap-action type="card" id="{{item.id}}" bind:tap="offline" data-item="{{item}}">
+      <view class="user_cell">{{item.no}} - {{item.nickName || '暂无昵称'}}</view>
+    </tap-action>
+  </view>
+</scroll-view>
+<view class="form_container">
+  <form bindsubmit="submit" bindreset="reset" report-submit="true" hidden="{{inputShowed}}">
+    <input hidden="true" name="userId" value="{{userId}}"></input>
+    <view class="form_user_name_cell">{{userName || '暂无昵称'}} -- 关联角色</view>
+    <checkbox-group name="roleResource" class="role_list_cell">
+      <label wx:for="{{roleList}}" wx:key="item">
+        <view class="role_cell">
+          <checkbox value="{{item.id}}" checked="{{item.checked}}" color="#695BBA" />
+          <text class="role_text_cell">{{item.name}}</text>
+        </view>
+      </label>
+    </checkbox-group>
+    <view class="flex_row_bet form_fun_cell">
+      <button type="primary" formType="submit" class="fun_cell" hover-class="tap-active">保存</button>
+    </view>
+  </form>
+</view>

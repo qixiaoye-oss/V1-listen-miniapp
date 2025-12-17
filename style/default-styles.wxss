@@ -1,0 +1,5 @@
+/* 通用样式汇总文件 */
+/* 导入标签样式和列表页布局样式，保持向后兼容 */
+
+@import "tag.wxss";
+@import "layout.wxss";

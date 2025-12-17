@@ -1,0 +1,20 @@
+/* 覆盖全局 page 的 padding-bottom，避免与内容区域 padding-bottom 叠加 */
+page {
+  padding-bottom: 0;
+}
+
+/* 页面容器 */
+.article-page {
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* 内容区域 - 动态 padding-bottom 由 buttonGroupHeight behavior 计算 */
+.article-page__content {
+  box-sizing: border-box;
+}
+
+.tag {
+  border: 1px solid transparent;
+  background-color: rgba(0, 0, 0, 0.15);
+}

@@ -1,0 +1,211 @@
+/* 引入样式 */
+@import "/style/iconfont.wxss";
+@import "/style/button-group.wxss";
+
+.edit-base-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.question-container {
+  border: 1px solid var(--solid-border-color);
+  border-radius: 9px;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* 句子部分 - 样式由 sentence-block 组件自包含 */
+.sentence-cell {
+  margin: 15px;
+}
+
+/* ai 评分部分 */
+.review-result {
+  margin-inline: 15px;
+  margin-bottom: 15px;
+  padding: 15px;
+  border: 1px dashed var(--border-color-4);
+  display: flex;
+  position: relative;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-btn__title {
+  right: 15px;
+  top: 15px;
+  font-size: 16px;
+  color: rgba(0, 166, 237, 1);
+  border: 1px solid rgba(0, 166, 237, 1);
+  border-radius: 3px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 166, 237, 0.15);
+}
+
+.review-result__img {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
+
+.review-result__result {
+  font-size: 16px;
+  line-height: 1.4;
+  flex: 1;
+  height: 100%;
+}
+
+.review-btn__refresh {
+  border: 1px solid var(--border-color-4);
+  border-radius: 3px;
+  font-size: 12px;
+  padding: 5px 10px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.review-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  height: 100%;
+}
+
+/* 我的听写 */
+.answer-cell {
+  flex: 1;
+  margin-inline: 15px;
+  margin-bottom: 15px;
+  border: 1px dashed var(--solid-border-color);
+  padding: 15px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.answer-title {
+  font-size: 12px;
+  line-height: 1;
+  color: var(--solid-border-color);
+  margin-bottom: 10px;
+}
+
+.user-answer {
+  line-height: 1.4;
+  font-size: 16px;
+}
+
+/* 富文本 */
+.toolbar {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 13px;
+  padding-block: 12px;
+  border-top: 1px dashed var(--solid-border-color);
+  border-bottom: 1px dashed var(--solid-border-color);
+  gap: 15px;
+}
+
+.toolbar image {
+  width: 22px;
+  height: 22px;
+}
+
+.toolbar i {
+  font-size: 20px;
+  position: relative;
+}
+
+.candidate-color {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.candidate-colors-cell {
+  position: absolute;
+  top: 50px;
+  left: -15px;
+  background: #f8f8f8;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  border-radius: 9px;
+  gap: 15px;
+  z-index: 1;
+}
+
+.candidate-colors-cell::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  /* 调整箭头水平位置到左侧10% */
+  bottom: 100%;
+  /* 箭头位于气泡正上方 */
+  margin-left: -9px;
+  /* 根据箭头大小调整，使箭头更准确地定位在左侧10% */
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-bottom-color: #f8f8f8;
+  /* 箭头颜色与气泡背景色相同 */
+}
+
+.bg-candidate-colors-cell {
+  left: 17px;
+}
+
+/* 富文本主体 */
+.editor-point {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+#editor {
+  position: relative;
+  z-index: 1;
+  line-height: 1.4;
+  height: 100%;
+}
+
+.pl_ {
+  color: var(--solid-border-color);
+  font-size: 16px;
+  position: absolute;
+  top: -2px;
+  z-index: -1;
+}
+
+/* 保存按钮 - 右下角定位（仅覆盖位置，按钮样式使用公共 btn-action） */
+.save-btn {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}
+
+.no-data {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--color-5);
+}

@@ -1,0 +1,47 @@
+/* 句子块组件 - 包含原文（多片段）和翻译 */
+.sentence-block {
+  display: block;
+}
+
+/* 原文容器 */
+.sentence-block__text-container {
+  display: inline;
+}
+
+.sentence-block__text-container--hidden {
+  color: rgba(0, 0, 0, 0);
+}
+
+/* 原文片段样式 */
+.sentence-block__text {
+  background-color: #f2f2f2;
+  border-left: 3px solid var(--theme-color);
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.4;
+  position: relative;
+  z-index: 3;
+}
+
+.sentence-block__text--active {
+  background-color: #d6e4fd;
+}
+
+/* 翻译样式：字号14px，行高1.4，颜色rgba(0,0,0,0.5)，间距10px */
+.sentence-block__translate {
+  margin-top: 10px;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  color: rgba(0, 0, 0, 0.5) !important;
+  font-weight: normal !important;
+}
+
+/* 翻译始终有灰色背景（与原文一致） */
+.sentence-block__translate-text {
+  background-color: #f2f2f2;
+}
+
+.sentence-block__translate--hidden .sentence-block__translate-text {
+  color: rgba(0, 0, 0, 0) !important;
+}
+

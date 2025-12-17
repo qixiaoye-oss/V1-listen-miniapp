@@ -1,0 +1,62 @@
+.base_view {
+  width: calc(100vw - 20px);
+  height: calc(100vh - 40px);
+}
+
+.layout_grid {
+  display: grid;
+  gap: 15px;
+  padding-right: 20px;
+}
+
+.list_container {
+  border: 1px solid var(--solid-border-color);
+  border-radius: 9px;
+  padding: 15px 15px;
+  font-size: 18px;
+}
+
+.list_undone {
+  background-color: #f2f2f2;
+}
+
+.listening_header {
+  color: rgba(0, 0, 0, 0.3);
+  position: relative;
+  display: flex;
+  font-size: 14px;
+}
+
+.label {
+  color: #ff6146;
+}
+
+.list_index {
+  /* color: #D7D7D7; */
+  margin-right: 5px;
+}
+
+/* 句子内容区域 - 样式由 sentence-block 组件自包含 */
+.listening_content {
+  margin: 10px 0;
+}
+
+.play {
+  margin-right: 25px;
+}
+
+.select {
+  border: 1px solid var(--theme-color);
+}
+
+.label_flag {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 0px;
+}
+
+/* 按钮样式覆盖 */
+.btn-action-icon {
+  margin-left: 10px;
+}

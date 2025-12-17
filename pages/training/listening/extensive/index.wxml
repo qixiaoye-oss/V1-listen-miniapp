@@ -1,0 +1,78 @@
+<import src="/templates/page-loading.wxml" />
+<import src="/templates/audio-loading.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<template is="audioLoading" data="{{audioDownProgress}}" />
+<view class="page font_color_base" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : ''}}">
+  <view class="header_container" wx:for="{{parts}}" wx:for-item="part" wx:for-index="partIndex" wx:key="id">
+    <view class="header_title">
+      <view>{{part.partNum}}</view>
+      <view class="header_title_right">
+        <view class="information_bubble" wx:if="{{false}}">
+          <view>注意此为单项</view>
+          <image src="/images/like.png"></image>
+        </view>
+        <view
+          class="btn-action-icon toggle_slider_btn {{showSlider ? 'rotate_down' : ''}}"
+          data-icon="down"
+          bindtap="toggleSlider"
+        >
+          <image src="/images/v2/down_bt.png"></image>
+        </view>
+      </view>
+    </view>
+    <view class="header_divider" wx:if="{{showSlider}}"></view>
+    <view class="header_slider" wx:if="{{showSlider}}">
+      <slider class="slider_con" activeColor='#3478F6' backgroundColor='#D7D7D7' block-size='16' max="10000" block-color='#3478F6' value='{{part.schedule}}' bindchange='sliderChange' disabled="{{!part.draggable}}"></slider>
+    </view>
+  </view>
+  <view class="content_container">
+    <view class="information_bubble" wx:if="{{false}}">
+      <view>机考去哪做题？</view>
+      <image src="/images/like.png"></image>
+    </view>
+    <view class="information_bubble" wx:if="{{false}}">
+      <view>纸质版题目在哪？</view>
+      <image src="/images/like.png"></image>
+    </view>
+  </view>
+</view>
+<view class="btn-page-bottom">
+  <view class="btn-group-split">
+    <view class="btn-group-split__header btn-pos-center">
+      <tap-action icon="play" wx:if="{{audioStatus === 0}}" bind:tap="playAudio">
+        <view>播放</view>
+        <image src="/images/v2/play_bt.png"></image>
+        <view class="btn-corner-mark">{{playbackRate}}x</view>
+      </tap-action>
+      <tap-action icon="pause" wx:if="{{audioStatus === 1}}" bind:tap="pauseAudio">
+        <view>暂停</view>
+        <image src="/images/v2/pause_bt.png"></image>
+        <view class="btn-corner-mark">{{playbackRate}}x</view>
+      </tap-action>
+      <tap-action icon="replay" wx:if="{{audioStatus === 2}}" bind:tap="refreshAudio">
+        <view>重新播放</view>
+        <image src="/images/v2/replay_bt.png"></image>
+        <view class="btn-corner-mark">{{playbackRate}}x</view>
+      </tap-action>
+      <tap-action icon="goto" bind:tap="toExam">
+        <view>前往答题</view>
+        <image src="/images/v2/goto_bt.png"></image>
+      </tap-action>
+    </view>
+    <view class="btn-group-split__divider"></view>
+    <view class="btn-group-split__footer">
+      <view class="btn-pos-left">
+        <tap-action icon="setting" bind:tap="playSet">
+          <image src="/images/v2/setting_bt.png" class="img_flag"></image>
+        </tap-action>
+      </view>
+      <view class="btn-pos-right">
+        <tap-action icon="list" bind:tap="toList">
+          <view>原文内容</view>
+          <image src="/images/v2/list_bt.png" class="img_flag"></image>
+        </tap-action>
+      </view>
+    </view>
+  </view>
+</view>
+<mp-actionSheet bindactiontap="btnClick" show="{{showActionsheet}}" actions="{{groups}}"></mp-actionSheet>

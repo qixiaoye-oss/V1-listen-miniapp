@@ -1,0 +1,45 @@
+<import src="/templates/page-loading.wxml" />
+<import src="/templates/audio-loading.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<template is="audioLoading" data="{{audioDownProgress}}" />
+<view class="{{isPc ? 'windows' : '' }}" wx:if="{{isAllRady}}">
+  <view class="body {{isPc ? 'left-body' : '' }}">
+    <notes-list
+      list="{{list}}"
+      nowPlayAudio="{{nowPlayAudio}}"
+      nowPlaySmallAudio="{{nowPlaySmallAudio}}"
+      bind:edit="toEditPage"
+      bind:review="review"
+      bind:return="returnPage"
+      bind:playAudio="onPlayAudio"
+      bind:playSegment="onPlaySegment"
+    ></notes-list>
+  </view>
+  <view class="intervals" wx:if="{{isPc}}"></view>
+  <block wx:if="{{isPc}}">
+    <view class="right-body">
+      <notes-editor
+        detail="{{detail}}"
+        detailIndex="{{detailIndex}}"
+        nowPlayAudio="{{nowPlayAudio}}"
+        nowPlaySmallAudio="{{nowPlaySmallAudio}}"
+        bind:ok="editOver"
+        bind:autosave="autoSave"
+        bind:playSegment="onPlaySegment"
+      ></notes-editor>
+    </view>
+  </block>
+  <block wx:else>
+    <page-container show="{{showDetail}}" position="right" overlay="{{false}}" duration="200">
+      <notes-editor
+        detail="{{detail}}"
+        detailIndex="{{detailIndex}}"
+        nowPlayAudio="{{nowPlayAudio}}"
+        nowPlaySmallAudio="{{nowPlaySmallAudio}}"
+        bind:ok="editOver"
+        bind:autosave="autoSave"
+        bind:playSegment="onPlaySegment"
+      ></notes-editor>
+    </page-container>
+  </block>
+</view>

@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "textarea_auto_height": "/components/textarea_auto_height/textarea_auto_height"
+  }
+}

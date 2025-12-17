@@ -1,0 +1,69 @@
+<wxs src="/utils/util.wxs" module="wxsUtil" />
+<view class="edit-base-container" wx:if="{{detail.list}}">
+  <view class="question-container">
+    <view id="question_cell" class="sentence-cell">
+      <sentence-block
+        list="{{detail.list}}"
+        translate="{{wxsUtil.getTranslate(detail)}}"
+        activeIndex="{{nowPlayAudio == detailIndex ? nowPlaySmallAudio : -1}}"
+        idPrefix="T"
+        bind:segmenttap="listenSentenceAgain"
+      />
+    </view>
+    <view class="review-result" wx:if="{{enableScore == 1}}">
+      <view class="review-result__result">{{detail.aiReviewResult}}</view>
+      <view class="review-btn">
+        <view class="review-btn__title">
+          <image class="review-result__img" src="/images/v2/rebot.png"></image>
+          <view>AI反馈</view>
+        </view>
+        <view class="review-btn__refresh" bind:tap="refreshAi">
+          <view>刷新</view>
+        </view>
+      </view>
+    </view>
+    <view class="answer-cell" id="answer_cell">
+      <view class="answer-title">我的听写</view>
+      <view class="user-answer">
+        <rich-text user-select="{{true}}" nodes="{{detail.content}}"></rich-text>
+      </view>
+      <view class="toolbar" catchtouchend="format">
+        <image src="/images/editor/{{formats.color ? 'color_' : 'color'}}.png" data-name="color" data-value=""></image>
+        <image src="/images/editor/{{formats.backgroundColor ? 'bgcolor_' : 'bgcolor'}}.png" data-name="backgroundColor" data-value=""></image>
+        <image src="/images/editor/{{formats.bold ? 'bold_' : 'bold'}}.png" data-name="bold"></image>
+        <image src="/images/editor/{{formats.italic ? 'italic_' : 'italic'}}.png" data-name="italic"></image>
+        <image src="/images/editor/{{formats.underline ? 'underline_' : 'underline'}}.png" data-name="underline"></image>
+        <view wx:if="{{formats.color === ''}}" class="candidate-colors-cell">
+          <i class="candidate-color" style="background: #000000;" data-name="color" data-value="#000000"></i>
+          <i class="candidate-color" style="background: #888888;" data-name="color" data-value="#888888"></i>
+          <i class="candidate-color" style="background: #F5DF41;" data-name="color" data-value="#F5DF41"></i>
+          <i class="candidate-color" style="background: #F68C40;" data-name="color" data-value="#F68C40"></i>
+          <i class="candidate-color" style="background: #FD2F35;" data-name="color" data-value="#FD2F35"></i>
+          <i class="candidate-color" style="background: #5BD7A4;" data-name="color" data-value="#5BD7A4"></i>
+          <image src="/images/reeor.png" data-name="color"></image>
+        </view>
+        <view wx:if="{{formats.backgroundColor === ''}}" class="candidate-colors-cell bg-candidate-colors-cell">
+          <i class="candidate-color" style="background: #000000;" data-name="backgroundColor" data-value="#000000"></i>
+          <i class="candidate-color" style="background: #888888;" data-name="backgroundColor" data-value="#888888"></i>
+          <i class="candidate-color" style="background: #F5DF41;" data-name="backgroundColor" data-value="#F5DF41"></i>
+          <i class="candidate-color" style="background: #F68C40;" data-name="backgroundColor" data-value="#F68C40"></i>
+          <i class="candidate-color" style="background: #FD2F35;" data-name="backgroundColor" data-value="#FD2F35"></i>
+          <i class="candidate-color" style="background: #5BD7A4;" data-name="backgroundColor" data-value="#5BD7A4"></i>
+          <image src="/images/reeor.png" data-name="backgroundColor"></image>
+        </view>
+      </view>
+      <view class="editor-point">
+        <editor wx:if="{{editorKey}}" id="editor" style="height: 100%;" bindstatuschange="onStatusChange" bindready="onEditorReady" bindfocus="textareaFocus" bindblur="textareaBlur"></editor>
+        <view class="pl_" wx:if="{{showPl}}">输入订正...</view>
+      </view>
+      <!-- 保存按钮 -->
+      <tap-action icon="save" class="save-btn" bind:tap="saveUserAnswer">
+        <view>保存</view>
+        <image src="/images/v2/save_bt.png"></image>
+      </tap-action>
+    </view>
+  </view>
+</view>
+<view wx:else class="no-data">
+  暂无选中
+</view>

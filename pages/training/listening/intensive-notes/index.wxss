@@ -1,0 +1,41 @@
+/**
+ * 精听笔记页面布局样式
+ * 注：page-loading.wxss 已在 app.wxss 全局引入
+ */
+
+page {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* PC端双栏布局 */
+.windows {
+  display: flex;
+}
+
+.body {
+  width: 750rpx;
+  height: 100vh;
+}
+
+.left-body {
+  width: 35%;
+  height: 100vh;
+}
+
+.intervals {
+  height: calc(100vh - 40px);
+  width: 1px;
+  position: relative;
+  top: 20px;
+  background: var(--solid-border-color);
+}
+
+.right-body {
+  width: 65%;
+  height: 100vh;
+}
+
+/* 句子样式已提取到公共组件 /components/sentence-block */

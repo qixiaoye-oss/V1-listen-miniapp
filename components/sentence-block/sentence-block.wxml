@@ -1,0 +1,17 @@
+<view class="sentence-block">
+  <!-- 原文部分：多个片段，可点击播放 -->
+  <view class="sentence-block__text-container {{hidden ? 'sentence-block__text-container--hidden' : ''}}">
+    <text
+      wx:for="{{list}}"
+      wx:key="index"
+      class="sentence-block__text {{activeIndex == index ? 'sentence-block__text--active' : ''}}"
+      bindtap="handleTap"
+      id="{{idPrefix}}{{index}}"
+      data-idx="{{index}}"
+    >{{item.content}}</text>
+  </view>
+  <!-- 翻译部分：不可点击 -->
+  <view class="sentence-block__translate {{hidden ? 'sentence-block__translate--hidden' : ''}}">
+    <text class="sentence-block__translate-text" user-select="{{true}}">{{translate || '暂无翻译'}}</text>
+  </view>
+</view>

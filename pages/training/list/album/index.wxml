@@ -1,0 +1,33 @@
+<import src="/templates/page-loading.wxml" />
+<import src="/templates/load-error.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<template is="loadError" data="{{loadError}}" />
+<wxs src="/utils/util.wxs" module="wxsUtil" />
+<!-- 骨架屏 -->
+<skeleton type="list" loading="{{loading}}" rows="5" wx:if="{{!loadError}}" />
+<view class="album-list" wx:if="{{!loading && !loadError}}">
+  <!-- <view class="album-settings-entry" bind:tap="toPage" hover-class="tap-active" hover-stay-time="100">
+    <view class="album-settings-entry__button" style="background: rgba(49, 159, 231, 0.15);">
+      <image src="/images/v2/line.png"></image>
+      <text>完成率统计</text>
+    </view>
+  </view> -->
+  <block wx:for="{{list}}" wx:for-item="chapter" wx:for-index="chapterIndex" wx:key="id">
+    <tap-action type="card" bind:tap="toChapter" data-id="{{chapter.id}}">
+      <view class="album-item" style="border-color: {{chapter.colorRgb}};">
+        <view class="album-item__underpaint" wx:if="{{chapter.completionRate != '100%'}}" style="background-image: linear-gradient(to right, {{chapter.colorRgba}} 0%, {{chapter.colorRgba}} {{wxsUtil.calcGradientStop(chapter.completionRate)}}%, #ffffff 100%); width: {{wxsUtil.calcProgressWidth(chapter.completionRate)}}%;"></view>
+        <view class="album-item__underpaint" wx:else style="background: {{chapter.colorRgba}}; width: 100%;"></view>
+        <view class="album-item__title" style="background: {{chapter.colorRgba}};">
+          <image class="album-item__icon" wx:if="{{chapter.iconUrl}}" src="{{chapter.iconUrl}}" />
+          <view class="album-item__text">
+            <text>{{chapter.title}}</text>
+          </view>
+        </view>
+        <view class="tag--right tag tag--transparent" style="color: {{chapter.colorRgb}};border-color: {{chapter.colorRgb}};">{{chapter.subItemCount}}{{chapter.subItemCategory}}</view>
+        <view class="tag tag--transparent" style="color: {{chapter.colorRgb}};border-color: {{chapter.colorRgb}};">完成{{chapter.progress}}%</view>
+      </view>
+    </tap-action>
+  </block>
+</view>
+<view class="no-data" wx:if="{{!loading && list.length==0}}">暂无数据</view>
+<view class="page-safe-area"></view>

@@ -1,0 +1,29 @@
+/**
+ * 主题样式 (Theme Styles)
+ * @description 全局通用边框样式变量
+ * @note 按钮组样式已迁移至 style/button-group.wxss
+ */
+
+page {
+  /* 通用边框样式（被 header_container 等多个组件使用） */
+  --btn-border-theme-1: 1px solid var(--solid-border-color);
+  --btn-border-theme-2: 2px solid var(--solid-border-color);
+  --btn-border-theme: 2px solid transparent;
+  --btn-border-width: 1px;
+  --btn-border-width-2: 2px;
+  --btn-border-color: var(--solid-border-color);
+  --btn-no-border-color: transparent;
+}
+
+/*
+ * 按钮组相关样式已迁移至 style/button-group.wxss
+ * 包括：
+ * - .btn-action, .btn-action-icon（按钮基础样式）
+ * - .btn-group-split, .btn-group-single（布局类）
+ * - .btn-page-bottom（固定底部容器+蒙版）
+ * - data-icon 颜色映射（通过属性自动应用颜色）
+ * - .btn-corner-mark（角标）
+ * - .btn-pos-*（位置类）
+ *
+ * 详见文档：docs/button-group-style-guide.md
+ */

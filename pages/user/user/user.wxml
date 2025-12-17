@@ -1,0 +1,19 @@
+<import src="/templates/page-loading.wxml" />
+<import src="/templates/load-error.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<template is="loadError" data="{{loadError}}" />
+<!-- 骨架屏 -->
+<skeleton type="user" loading="{{loading}}" wx:if="{{!loadError}}" />
+<view class="user-page" wx:if="{{!loading && !loadError}}">
+  <view class="user-info">
+    <image class="user__avatar" src="{{user.headUrl}}" mode="cover" />
+    <view class="user__nickname">
+      <view>{{user.nickName || '微信用户'}}</view>
+      <view class="user__no">（{{user.no}}）</view>
+    </view>
+  </view>
+  <tap-action type="card" bind:tap="toUpdateUserInfo">
+    <view class="menu-item menu-item--access">修改用户信息</view>
+  </tap-action>
+  <view class="menu-item">版本号 {{version || '2.2.2'}}</view>
+</view>

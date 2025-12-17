@@ -1,0 +1,20 @@
+<form bindsubmit="formSubmit">
+  <view class="user-page" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : ''}}">
+    <view class="user-info">
+      <button class="user__avatar-button" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar" hover-class="tap-active">
+        <image class="user__avatar" src="{{user.headUrl}}" mode="cover" />
+      </button>
+      <input name='headUrl' value="{{user.headUrl}}" hidden="true" />
+      <input name='nickName' type="nickname" class="user__nickname" placeholder="请输入昵称" value="{{user.nickName}}" />
+      <view class="remind">修改之前，请先完善用户信息</view>
+    </view>
+  </view>
+  <view class="btn-page-bottom">
+    <view class="btn-group-single">
+      <button formType="submit" class="btn-action" data-icon="save" hover-class="tap-active">
+        <view>保存</view>
+        <image src="/images/v2/save_bt.png"></image>
+      </button>
+    </view>
+  </view>
+</form>

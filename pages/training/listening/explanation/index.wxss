@@ -1,0 +1,133 @@
+.explain {
+  border: 1px solid var(--theme-color);
+  border-radius: 9px;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.tag--transparent {
+  background-color: var(--theme-color);
+}
+
+.explain__question {
+  padding: 15px;
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.explain__question--option {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.explain__question--option-item {
+  display: flex;
+}
+
+.explain__question--option-choice {
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+.explain__article {
+  padding: 15px;
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  border-top: 1px solid var(--theme-color);
+}
+
+.explain__article--content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.explain__analysis {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  border-top: 1px solid var(--theme-color);
+}
+
+.explain__analysis--ordinary {
+  padding: 15px;
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  border-top: 1px solid var(--theme-color);
+}
+
+/* 内嵌式按钮组 - 用于内容区域的轻量按钮组，无外边框和padding */
+.btn-group-embedded {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* 原文样式 */
+.content {
+  box-sizing: content-box;
+}
+
+.font_color_base {
+  color: var(--theme-color);
+}
+
+.sentence_analysis_cell {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.layout_flex {
+  display: flex;
+}
+
+.font_color_grey {
+  color: #7f7f7f;
+}
+
+
+
+.left_cell {
+  width: 60px;
+}
+
+.model_name {
+  text-align: center;
+  font-size: 12px;
+  position: relative;
+  top: 4px;
+}
+
+.col1 {
+  color: #FFFFFF;
+  border: 1px solid var(--theme-color);
+  background: var(--theme-color);
+}
+
+.col2 {
+  color: rgba(248, 181, 87, 1);
+  border: 1px solid rgba(248, 181, 87, 0.3);
+  background: rgba(248, 181, 87, 0.3);
+}
+
+.plv_1 {
+  padding-left: 0px;
+}
+
+.plv_2 {
+  padding-left: 20px;
+}
+
+.plv_3 {
+  padding-left: 40px;
+}

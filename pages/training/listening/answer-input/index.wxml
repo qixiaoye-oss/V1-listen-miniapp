@@ -1,0 +1,27 @@
+<import src="/templates/page-loading.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<view class="page-content" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : ''}}">
+  <block wx:for="{{parts}}" wx:for-item="part" wx:for-index="partIndex" wx:key="id">
+    <view class="header_container">
+      <view class="header_title">{{part.partNum}}</view>
+    </view>
+    <view class="parctice">
+      <block wx:for="{{part.groups}}" wx:for-item="group" wx:for-index="groupIndex" wx:key="id">
+        <view wx:for="{{group.questions}}" wx:key="id" class="question">
+          <view class="question__num">{{item.qNumber}}</view>
+          <view class="question__input">
+            <textarea_auto_height bind:input="inputArea" data-part-index="{{partIndex}}" data-group-index="{{groupIndex}}" data-question-index="{{index}}" width=""></textarea_auto_height>
+          </view>
+        </view>
+      </block>
+    </view>
+  </block>
+</view>
+<view class="btn-page-bottom">
+  <view class="btn-group-single">
+    <tap-action icon="correct" bind:tap="saveQue">
+      <view>提交</view>
+      <image src="/images/v2/correct_bt.png"></image>
+    </tap-action>
+  </view>
+</view>

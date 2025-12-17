@@ -1,0 +1,94 @@
+<import src="/templates/page-loading.wxml" />
+<import src="/templates/audio-loading.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<template is="audioLoading" data="{{audioDownProgress}}" />
+<wxs src="/utils/util.wxs" module="wxsUtil" />
+<view class="page-wrapper" style="height: {{contentAreaHeight ? contentAreaHeight + 'px' : 'calc(100vh - var(--button-group-total-height-with-hint))'}}">
+  <view class="base-container">
+    <progress-bar current="{{swiperCurrent + 1}}" total="{{list.length}}" />
+  </view>
+  <view class="body">
+    <view class="label-container">
+      <view class="paragraph-cell">
+        <view class="paragraph-content-cell">
+          <sentence-block
+            list="{{list[swiperCurrent].list}}"
+            translate="{{wxsUtil.getTranslate(list[swiperCurrent])}}"
+            activeIndex="{{playingSmallIndex}}"
+            hidden="{{!baseShowArticle && !showArticle}}"
+            idPrefix="T"
+            bind:segmenttap="listenSentenceAgain"
+          />
+        </view>
+        <view class="writing-cell">
+          <view class="writing-label">我的听写</view>
+          <textarea value="{{list[swiperCurrent].label}}" style="top:{{areaTop}}px;left: {{areaLeft}}px;" confirm-type="return" bindinput="inputVal" bindfocus="textareaFocus" bindblur="textareaBlur" maxlength="1000"></textarea>
+          <view class="pl-class" wx:if="{{showPl && !list[swiperCurrent].label}}">请输入你的回答...</view>
+          <view class="notes-save-status" wx:if="{{notesSaveStatus !== 'none'}}">
+            <text wx:if="{{notesSaveStatus === 'saving'}}">Saving...</text>
+            <text wx:if="{{notesSaveStatus === 'saved'}}">Saved!</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="btn-page-bottom">
+  <!-- Hint Banner - 在按钮组外部上方 -->
+  <view class="btn-group-hint-banner" data-icon="list" wx:if="{{swiperCurrent + 1 < list.length}}">
+    听写框输入内容，句子则自动被标注为"听不懂的句子"并保存
+  </view>
+  <view class="btn-group-hint-banner" data-icon="go" wx:if="{{swiperCurrent + 1 >= list.length}}">
+    结束后，点击"保存"并进入订正环节
+  </view>
+  <view class="btn-group-split">
+    <view class="btn-group-split__header btn-pos-center">
+      <tap-action icon="replay" bind:tap="listenAgain">
+        <view>重播</view>
+        <image src="/images/v2/replay_bt.png"></image>
+      </tap-action>
+      <tap-action icon="play" wx:if="{{audioState === 'none'}}" bind:tap="playAudio">
+        <view>播放</view>
+        <image src="/images/v2/play_bt.png"></image>
+      </tap-action>
+      <tap-action icon="pause" wx:if="{{audioState === 'playing'}}" bind:tap="stopAudio">
+        <view>暂停</view>
+        <image src="/images/v2/pause_bt.png"></image>
+      </tap-action>
+      <tap-action icon="next" wx:if="{{!completelyOver && audioState === 'stop'}}" bind:tap="nextSentence">
+        <view>下句</view>
+        <image src="/images/v2/next_bt.png"></image>
+      </tap-action>
+      <tap-action icon="submit" wx:if="{{completelyOver && audioState === 'stop'}}" bind:tap="toExam">
+        <view>保存</view>
+        <image src="/images/v2/submit_bt.png"></image>
+      </tap-action>
+      <tap-action icon="correct" disabled="{{list[swiperCurrent].label || list[swiperCurrent].status == 0}}" bind:tap="nextSentence2">
+        <view>听懂</view>
+        <image src="/images/v2/correct_bt.png"></image>
+      </tap-action>
+    </view>
+    <view class="btn-group-split__divider"></view>
+    <view class="btn-group-split__footer">
+      <view class="btn-pos-left">
+        <tap-action icon="setting" bind:tap="playSet">
+          <image src="/images/v2/setting_bt.png"></image>
+        </tap-action>
+        <tap-action icon="visible" wx:if="{{baseShowArticle}}">
+          <image src="/images/v2/visible_bt.png"></image>
+        </tap-action>
+        <tap-action icon="visible" wx:if="{{!baseShowArticle}}" bind:tap="showArticle">
+          <image wx:if="{{!showArticle}}" src="/images/v2/hidden_bt.png"></image>
+          <image wx:if="{{showArticle}}" src="/images/v2/visible_bt.png"></image>
+        </tap-action>
+      </view>
+      <view class="btn-pos-right">
+        <tap-action icon="list" bind:tap="toList">
+          <view>句子列表</view>
+          <image src="/images/v2/list_bt.png" class="but-img-2"></image>
+        </tap-action>
+      </view>
+    </view>
+  </view>
+</view>
+<mp-actionSheet bindactiontap="btnClick" show="{{showActionsheet}}" actions="{{groups}}"></mp-actionSheet>

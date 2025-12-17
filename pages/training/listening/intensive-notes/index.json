@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "notes-list": "./components/notes-list/notes-list",
+    "notes-editor": "./components/notes-editor/notes-editor"
+  }
+}

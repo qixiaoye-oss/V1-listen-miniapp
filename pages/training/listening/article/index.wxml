@@ -1,0 +1,26 @@
+<import src="/templates/page-loading.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<!-- 骨架屏 -->
+<skeleton type="detail" loading="{{loading}}" />
+<view class="article-page" wx:if="{{_isDataReady}}">
+  <!-- padding-bottom = buttonGroupHeight，确保内容底边距离按钮组顶边 15px -->
+  <view class="article-page__content" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : ''}}">
+    <view class="sub-item">
+      <view class="sub-item__header">
+        <view class="tag">文本</view>
+      </view>
+      <view class="sub-item__intervals"></view>
+      <view class="sub-item__header">
+        <mp-html content="{{article}}" tag-style="{{htmlStyle}}"></mp-html>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="btn-page-bottom" wx:if="{{_isDataReady}}">
+  <view class="btn-group-single">
+    <tap-action icon="save" bind:tap="returnPage">
+      <view>返回</view>
+      <image src="/images/v2/save_bt.png"></image>
+    </tap-action>
+  </view>
+</view>
