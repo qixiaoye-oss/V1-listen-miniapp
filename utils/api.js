@@ -66,9 +66,12 @@ function request(that, url, data, hasToast, method) {
       success: function (res) {
         wx.hideLoading()
         if (res.data.code == '200') {
-          console.log(res.data)
+          console.log('[api.request] 请求成功:', url)
+          console.log('[api.request] 返回数据:', JSON.stringify(res.data.data)?.slice?.(0, 200))
           if (isNotEmpty(that) && !isEmpty(that.route) && !isEmpty(res.data.data)) {
+            console.log('[api.request] 自动setData, 数据keys:', Object.keys(res.data.data || {}))
             that.setData(res.data.data)
+            console.log('[api.request] setData后 that.data.list长度:', that.data?.list?.length)
           }
           resolve(res.data.data)
         } else {

@@ -46,9 +46,17 @@ Page({
   // 获取数据
   listData() {
     const _this = this
+    console.log('[intensive-notes][listData] 开始加载数据')
     api.request(this, '/record/v1/list/label', {
       ...this.options
     }, true).then((res) => {
+      console.log('[intensive-notes][listData] API返回, list长度:', res?.list?.length)
+      // 打印每个item的reviseContent状态
+      res?.list?.forEach((item, idx) => {
+        if (item.reviseContent) {
+          console.log('[intensive-notes][listData] list[' + idx + '].reviseContent:', item.reviseContent?.slice?.(0, 50))
+        }
+      })
       // 如果有 audioUrl，预加载音频
       if (res?.audioUrl) {
         return audioApi.initAudio(res.audioUrl, (progress) => {
@@ -62,6 +70,7 @@ Page({
         audioContext = audio
         _this.audioContextListener()
       }
+      console.log('[intensive-notes][listData] 加载完成, this.data.list长度:', _this.data.list?.length)
       _this.setData({ isAllRady: true })
       _this.finishAudioPageLoading()
     }).catch(() => {
@@ -199,10 +208,12 @@ Page({
   toEditPage({ detail }) {
     let { list } = this.data
     let detailIndex = -1
+    console.log('[intensive-notes][toEditPage] 进入编辑, detail.id:', detail?.id, 'detail.reviseContent:', detail?.reviseContent?.slice?.(0, 50))
     list.forEach((item, index) => {
       item.active = item.id === detail.id
       if (item.id === detail.id) {
         detailIndex = index
+        console.log('[intensive-notes][toEditPage] 找到对应list项, index:', index, 'list[index].reviseContent:', item.reviseContent?.slice?.(0, 50))
       }
     });
     this.setData({ detail, detailIndex, showDetail: true, list })
@@ -212,33 +223,46 @@ Page({
     const { id, html } = detail
     const { list, isPc } = this.data
 
-    console.log('[onSave] 收到保存事件, id:', id, 'html长度:', html?.length)
+    console.log('[intensive-notes][onSave] 收到保存事件, id:', id, 'html长度:', html?.length)
+    console.log('[intensive-notes][onSave] 保存前 list 状态:')
+    list?.forEach((item, idx) => {
+      if (item.reviseContent) {
+        console.log('[intensive-notes][onSave]   list[' + idx + '].reviseContent:', item.reviseContent?.slice?.(0, 30))
+      }
+    })
 
     // 更新本地列表数据
     const index = list.findIndex((i) => i.id === id)
+    console.log('[intensive-notes][onSave] 找到index:', index)
     if (index !== -1) {
       this.setData({
         [`list[${index}].reviseContent`]: html
       })
+      console.log('[intensive-notes][onSave] 已更新 list[' + index + '].reviseContent')
     }
 
     // 调用保存API（确保 id 为字符串，避免大数精度丢失）
-    console.log('[onSave] 开始调用API, id类型:', typeof id)
+    console.log('[intensive-notes][onSave] 开始调用API, id:', String(id))
+    const _this = this
     api.request(this, '/record/v1/save/revise', {
       id: String(id),
       reviseContent: html
-    }, false, 'post').then(() => {
-      console.log('[onSave] API成功')
+    }, false, 'post').then((res) => {
+      console.log('[intensive-notes][onSave] API成功, 返回值:', JSON.stringify(res))
+      console.log('[intensive-notes][onSave] API成功后 this.data.list 状态:')
+      _this.data.list?.forEach((item, idx) => {
+        console.log('[intensive-notes][onSave]   list[' + idx + '].reviseContent:', item.reviseContent?.slice?.(0, 30) || '(空)')
+      })
       // 保存成功，回调组件
-      const editor = this.selectComponent('#notesEditor')
-      console.log('[onSave] selectComponent 结果:', !!editor)
+      const editor = _this.selectComponent('#notesEditor')
+      console.log('[intensive-notes][onSave] selectComponent 结果:', !!editor)
       if (editor) {
         editor.onSaveSuccess(html)
       }
     }).catch((err) => {
-      console.log('[onSave] API失败:', err)
+      console.log('[intensive-notes][onSave] API失败:', err)
       // 保存失败，回调组件
-      const editor = this.selectComponent('#notesEditor')
+      const editor = _this.selectComponent('#notesEditor')
       if (editor) {
         editor.onSaveFailed()
       }
