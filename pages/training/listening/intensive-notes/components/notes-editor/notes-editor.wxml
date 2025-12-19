@@ -53,14 +53,27 @@
         </view>
       </view>
       <view class="editor-point">
-        <editor wx:if="{{editorKey}}" id="editor" style="height: 100%;" bindstatuschange="onStatusChange" bindready="onEditorReady" bindfocus="textareaFocus" bindblur="textareaBlur"></editor>
+        <editor wx:if="{{editorKey}}" id="editor" style="height: 100%;" bindstatuschange="onStatusChange" bindready="onEditorReady" bindfocus="textareaFocus" bindblur="textareaBlur" bindinput="onEditorInput"></editor>
         <view class="pl_" wx:if="{{showPl}}">输入订正...</view>
       </view>
-      <!-- 保存按钮 -->
-      <tap-action icon="save" class="save-btn" bind:tap="saveUserAnswer">
-        <view>保存</view>
-        <image src="/images/v2/save_bt.png"></image>
-      </tap-action>
+      <!-- 保存按钮区域 -->
+      <view class="save-btn-area">
+        <!-- 保存失败提示 -->
+        <view class="save-error-tip" wx:if="{{saveStatus === 'failed'}}">保存失败，请重试</view>
+        <!-- 保存按钮 -->
+        <tap-action
+          icon="{{saveStatus === 'saved' ? 'correct' : 'save'}}"
+          class="save-btn"
+          disabled="{{saveStatus !== 'failed'}}"
+          bind:tap="saveUserAnswer"
+        >
+          <view wx:if="{{saveStatus === 'saving'}}" class="saving-text">保存中<text class="saving-dots"><text class="dot dot1">.</text><text class="dot dot2">.</text><text class="dot dot3">.</text></text></view>
+          <view wx:elif="{{saveStatus === 'saved'}}">已保存</view>
+          <view wx:else>保存</view>
+          <image wx:if="{{saveStatus === 'saved'}}" src="/images/v2/correct_bt.png"></image>
+          <image wx:else src="/images/v2/save_bt.png"></image>
+        </tap-action>
+      </view>
     </view>
   </view>
 </view>

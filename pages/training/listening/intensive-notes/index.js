@@ -210,44 +210,39 @@ Page({
     });
     this.setData({ detail, detailIndex, showDetail: true, list })
   },
-  editOver({ detail }) {
-    const { list } = this.data
-    if (detail.errMsg == 'ok') {
-      let index = list.findIndex((i) => i.id === detail.id)
+  // 保存事件处理（由 notes-editor 组件触发）
+  onSave({ detail }) {
+    const { id, html } = detail
+    const { list, isPc } = this.data
+
+    // 更新本地列表数据
+    const index = list.findIndex((i) => i.id === id)
+    if (index !== -1) {
       this.setData({
-        [`list[${index}].reviseContent`]: detail.html
-      })
-      this.editRecord({
-        id: detail.id,
-        reviseContent: detail.html
+        [`list[${index}].reviseContent`]: html
       })
     }
-    this.setData({ showDetail: false })
-  },
-  editRecord(answer, showToast = true) {
-    api.request(this, '/record/v1/save/revise', answer, false, 'post').then(() => {
-      if (showToast) {
-        api.toast('保存成功')
+
+    // 获取编辑器组件实例
+    const editorSelector = isPc ? '.right-body notes-editor' : 'page-container notes-editor'
+
+    // 调用保存API
+    api.request(this, '/record/v1/save/revise', {
+      id,
+      reviseContent: html
+    }, false, 'post').then(() => {
+      // 保存成功，回调组件
+      const editor = this.selectComponent(editorSelector)
+      if (editor) {
+        editor.onSaveSuccess(html)
       }
     }).catch(() => {
-      // 保存失败仅提示
-    })
-  },
-  // 实时自动保存
-  autoSave({ detail }) {
-    const { list } = this.data
-    if (detail.id) {
-      let index = list.findIndex((i) => i.id === detail.id)
-      if (index !== -1) {
-        this.setData({
-          [`list[${index}].reviseContent`]: detail.html
-        })
-        this.editRecord({
-          id: detail.id,
-          reviseContent: detail.html
-        }, false) // 静默保存，不显示提示
+      // 保存失败，回调组件
+      const editor = this.selectComponent(editorSelector)
+      if (editor) {
+        editor.onSaveFailed()
       }
-    }
+    })
   },
   returnPage() {
     this.navigateBack()

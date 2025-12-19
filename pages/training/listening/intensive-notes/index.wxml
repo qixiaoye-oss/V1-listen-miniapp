@@ -23,8 +23,7 @@
         detailIndex="{{detailIndex}}"
         nowPlayAudio="{{nowPlayAudio}}"
         nowPlaySmallAudio="{{nowPlaySmallAudio}}"
-        bind:ok="editOver"
-        bind:autosave="autoSave"
+        bind:save="onSave"
         bind:playSegment="onPlaySegment"
       ></notes-editor>
     </view>
@@ -36,8 +35,7 @@
         detailIndex="{{detailIndex}}"
         nowPlayAudio="{{nowPlayAudio}}"
         nowPlaySmallAudio="{{nowPlaySmallAudio}}"
-        bind:ok="editOver"
-        bind:autosave="autoSave"
+        bind:save="onSave"
         bind:playSegment="onPlaySegment"
       ></notes-editor>
     </page-container>
