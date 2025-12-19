@@ -195,3 +195,13 @@
 .item-spacing {
   height: 15px;
 }
+
+/* ==================== PC/PAD 横屏适配 ==================== */
+/* 横屏时限制按钮组宽度在组件范围内（组件宽度为 35%） */
+@media screen and (min-aspect-ratio: 1/1) {
+  .btn-page-bottom {
+    /* 组件宽度为 35%，left 保持 20px */
+    /* right = 100% - 35% + 20px = 65% + 20px */
+    right: calc(65% + 20px);
+  }
+}
