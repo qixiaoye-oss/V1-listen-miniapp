@@ -225,10 +225,10 @@ Page({
       })
     }
 
-    // 调用保存API
-    console.log('[onSave] 开始调用API')
+    // 调用保存API（确保 id 为字符串，避免大数精度丢失）
+    console.log('[onSave] 开始调用API, id类型:', typeof id)
     api.request(this, '/record/v1/save/revise', {
-      id,
+      id: String(id),
       reviseContent: html
     }, false, 'post').then(() => {
       console.log('[onSave] API成功')
