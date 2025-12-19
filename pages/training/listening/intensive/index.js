@@ -170,8 +170,7 @@ Page({
       audioContext.play()
     })
     this.setData({
-      audioEndTime: audioApi.millis2Seconds(paragraph.endTimeMillis),
-      playType: 'whole',
+      audioEndTime: audioApi.millis2Seconds(paragraph.endTimeMillis)
     })
     this.saveSentencePlayingRecord()
   },
@@ -237,8 +236,7 @@ Page({
     const sentence = list[swiperCurrent].list[idx]
     this.setData({
       audioEndTime: audioApi.millis2Seconds(sentence.endTimeMillis),
-      playingSmallIndex: idx,
-      playType: 'single'
+      playingSmallIndex: idx
     })
     let startTime = audioApi.millis2Seconds(sentence.startTimeMillis)
     startTime = startTime == 0 ? startTime : (startTime - 0.1)
