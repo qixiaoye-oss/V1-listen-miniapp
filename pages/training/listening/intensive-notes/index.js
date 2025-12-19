@@ -215,6 +215,8 @@ Page({
     const { id, html } = detail
     const { list, isPc } = this.data
 
+    console.log('[onSave] 收到保存事件, id:', id, 'html长度:', html?.length)
+
     // 更新本地列表数据
     const index = list.findIndex((i) => i.id === id)
     if (index !== -1) {
@@ -224,16 +226,20 @@ Page({
     }
 
     // 调用保存API
+    console.log('[onSave] 开始调用API')
     api.request(this, '/record/v1/save/revise', {
       id,
       reviseContent: html
     }, false, 'post').then(() => {
+      console.log('[onSave] API成功')
       // 保存成功，回调组件
       const editor = this.selectComponent('#notesEditor')
+      console.log('[onSave] selectComponent 结果:', !!editor)
       if (editor) {
         editor.onSaveSuccess(html)
       }
-    }).catch(() => {
+    }).catch((err) => {
+      console.log('[onSave] API失败:', err)
       // 保存失败，回调组件
       const editor = this.selectComponent('#notesEditor')
       if (editor) {
