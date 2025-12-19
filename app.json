@@ -23,7 +23,7 @@
     "backgroundColor": "#ffffff",
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#FFF",
-    "navigationBarTitleText": "不刷语料库",
+    "navigationBarTitleText": "磨耳朵自由",
     "navigationBarTextStyle": "black",
     "enablePullDownRefresh": false,
     "pageOrientation": "auto"
