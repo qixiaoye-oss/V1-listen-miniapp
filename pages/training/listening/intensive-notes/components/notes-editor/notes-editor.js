@@ -31,7 +31,6 @@ Component({
   observers: {
     // 监听 detail 变化，重置编辑器和保存状态
     'detail.reviseContent': function (val) {
-      console.log('[notes-editor][observer] detail.reviseContent 变化:', val?.slice?.(0, 50) || val)
       // 销毁富文本编辑器
       this.setData({ editorKey: false, formats: {} })
       setTimeout(() => {
@@ -41,11 +40,9 @@ Component({
     },
     // 监听 detail.id 变化，重置保存状态
     'detail.id': function (val) {
-      console.log('[notes-editor][observer] detail.id 变化:', val)
       if (val) {
         const { detail } = this.data
         const hasContent = detail && detail.reviseContent && detail.reviseContent.trim()
-        console.log('[notes-editor][observer] 重置状态, hasContent:', hasContent, 'reviseContent:', detail?.reviseContent?.slice?.(0, 50))
         this.setData({
           saveStatus: hasContent ? 'saved' : 'empty',
           lastSavedContent: detail?.reviseContent || ''
@@ -72,34 +69,26 @@ Component({
     // 执行保存操作
     doSave() {
       const { editorCtx, detail, lastSavedContent } = this.data
-      console.log('[notes-editor][doSave] 开始, detail.id:', detail?.id, 'lastSavedContent长度:', lastSavedContent?.length)
-      if (!editorCtx || !detail?.id) {
-        console.log('[notes-editor][doSave] 跳过: editorCtx=', !!editorCtx, 'detail.id=', detail?.id)
-        return
-      }
+      if (!editorCtx || !detail?.id) return
 
       editorCtx.getContents({
         success: (res) => {
           const currentContent = res.html || ''
           const currentText = (res.text || '').trim()
-          console.log('[notes-editor][doSave] 获取内容, html长度:', currentContent.length, 'text长度:', currentText.length)
 
           // 内容为空
           if (!currentText) {
-            console.log('[notes-editor][doSave] 内容为空，跳过保存')
             this.setData({ saveStatus: 'empty', lastSavedContent: '' })
             return
           }
 
           // 内容无变化，直接标记已保存
           if (currentContent === lastSavedContent) {
-            console.log('[notes-editor][doSave] 内容无变化，跳过保存')
             this.setData({ saveStatus: 'saved' })
             return
           }
 
           // 设置保存中状态
-          console.log('[notes-editor][doSave] 触发save事件, id:', detail.id)
           this.setData({ saveStatus: 'saving' })
 
           // 触发保存事件，由父页面调用API
@@ -113,7 +102,6 @@ Component({
     },
     // 保存成功回调（由父页面调用）
     onSaveSuccess(html) {
-      console.log('[notes-editor][onSaveSuccess] html长度:', html?.length)
       this.setData({
         saveStatus: 'saved',
         lastSavedContent: html
@@ -121,7 +109,6 @@ Component({
     },
     // 保存失败回调（由父页面调用）
     onSaveFailed() {
-      console.log('[notes-editor][onSaveFailed] 保存失败')
       this.setData({ saveStatus: 'failed' })
     },
     // 编辑器内容变化时触发（防抖自动保存）
@@ -166,11 +153,9 @@ Component({
     // 富文本编辑器准备完毕
     onEditorReady() {
       const { detail } = this.data
-      console.log('[notes-editor][onEditorReady] 开始, detail.id:', detail?.id, 'detail.reviseContent长度:', detail?.reviseContent?.length)
       const _this = this
       wx.createSelectorQuery().in(this).select('#editor').context(function (res) {
         if (!res) {
-          console.log('[notes-editor][onEditorReady] 获取editor context失败')
           return
         }
         const editorCtx = res.context
@@ -188,7 +173,6 @@ Component({
         })
 
         const hasContent = detail.reviseContent && detail.reviseContent.trim()
-        console.log('[notes-editor][onEditorReady] hasContent:', hasContent, 'reviseContent:', detail.reviseContent?.slice?.(0, 50))
         if (hasContent) {
           // 当存在内容时直接赋值到富文本编辑器中
           editorCtx.setContents({
@@ -197,7 +181,6 @@ Component({
         }
 
         // 初始化保存状态
-        console.log('[notes-editor][onEditorReady] 初始化状态, saveStatus:', hasContent ? 'saved' : 'empty')
         _this.setData({
           editorCtx,
           showPl: !hasContent,
