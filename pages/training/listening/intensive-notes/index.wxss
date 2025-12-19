@@ -26,9 +26,12 @@ page {
 }
 
 .intervals {
-  height: 100vh;
+  height: calc(100vh - 40px);
   width: 1px;
+  position: relative;
+  top: 20px;
   background: var(--solid-border-color);
+  z-index: 10; /* 提升层级，避免被其他元素遮挡 */
 }
 
 .right-body {
