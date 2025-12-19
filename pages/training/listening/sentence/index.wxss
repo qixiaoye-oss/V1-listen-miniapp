@@ -16,8 +16,9 @@
   font-size: 18px;
 }
 
-.list_undone {
-  background-color: #f2f2f2;
+/* 已收听状态文字 - 主蓝色 */
+.status_listened {
+  color: var(--theme-color);
 }
 
 .listening_header {
