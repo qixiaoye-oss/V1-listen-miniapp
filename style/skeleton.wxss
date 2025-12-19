@@ -8,7 +8,7 @@
  * --skeleton-radius: 圆角大小（默认 4px）
  * --skeleton-card-bg: 卡片/容器背景色（默认 #fff）
  * --skeleton-border-color: 边框颜色（默认 #eee）
- * --skeleton-item-gap: 列表项间距（默认 8px）
+ * --skeleton-item-gap: 列表项间距（默认 15px）
  */
 
 /* ============================================================
@@ -99,7 +99,7 @@
   display: flex;
   align-items: center;
   padding: 12px 10px;
-  margin-bottom: var(--skeleton-item-gap, 8px);
+  margin-bottom: var(--skeleton-item-gap, 15px);
   background: var(--skeleton-card-bg, #fff);
   border-radius: var(--skeleton-radius, 4px);
   border: 1px solid var(--skeleton-border-color, #eee);
@@ -151,11 +151,11 @@
   display: flex;
   flex-wrap: wrap;
   padding: 0;
-  gap: 10px;
+  gap: 15px;
 }
 
 .skeleton-card__item {
-  width: calc(50% - 5px);
+  width: calc(50% - 7.5px);
   padding: 12px;
   background: var(--skeleton-card-bg, #fff);
   border-radius: var(--skeleton-radius, 4px);
@@ -198,7 +198,7 @@
 
 .skeleton-detail__section {
   padding: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   background: var(--skeleton-card-bg, #fff);
   border-radius: var(--skeleton-radius, 4px);
   border: 1px solid var(--skeleton-border-color, #eee);
@@ -244,7 +244,7 @@
 
 .skeleton-sentence__item {
   padding: 12px;
-  margin-bottom: var(--skeleton-item-gap, 8px);
+  margin-bottom: var(--skeleton-item-gap, 15px);
   background: var(--skeleton-card-bg, #fff);
   border-radius: var(--skeleton-radius, 4px);
   border: 1px solid var(--skeleton-border-color, #eee);
@@ -313,7 +313,7 @@
   display: flex;
   align-items: center;
   padding: 20px 16px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   background: var(--skeleton-card-bg, #fff);
   border-radius: var(--skeleton-radius, 4px);
 }
@@ -346,7 +346,7 @@
 .skeleton-user__menu {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 15px;
 }
 
 .skeleton-user__menu-item {
