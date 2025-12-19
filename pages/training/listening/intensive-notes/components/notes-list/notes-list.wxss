@@ -123,6 +123,11 @@
   margin-left: 0;
 }
 
+/* 右侧按钮组与左侧元素（如"有订正"标签）间距 15px */
+.buts-cell .btn-pos-right {
+  margin-left: 15px;
+}
+
 
 
 /* 复习按钮 */
