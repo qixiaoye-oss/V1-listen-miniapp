@@ -126,6 +126,21 @@ function getTranslate(item) {
   return item.translate || item.chinese || ''
 }
 
+/**
+ * 检查 reviseContent 是否有实际内容（不只是空的 HTML 标签）
+ * @param html HTML 字符串
+ * @returns 是否有实际内容
+ */
+function hasReviseContent(html) {
+  if (!html || html === '') return false
+  // 去除所有 HTML 标签
+  var text = html.replace(getRegExp('<[^>]*>', 'g'), '')
+  // 去除空白字符（包括 &nbsp;）
+  text = text.replace(getRegExp('&nbsp;', 'g'), '')
+  text = text.replace(getRegExp('\\s', 'g'), '')
+  return text.length > 0
+}
+
 module.exports = {
   formatDate: formatDate,
   isCheck: isCheck,
@@ -135,5 +150,6 @@ module.exports = {
   accuracyStyle: accuracyStyle,
   calcGradientStop: calcGradientStop,
   calcProgressWidth: calcProgressWidth,
-  getTranslate: getTranslate
+  getTranslate: getTranslate,
+  hasReviseContent: hasReviseContent
 }
