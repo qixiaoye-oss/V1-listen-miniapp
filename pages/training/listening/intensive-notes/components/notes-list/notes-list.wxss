@@ -7,18 +7,19 @@
   height: 100%;
   position: relative;
   padding: 20px;
+  padding-bottom: 0; /* 底部由按钮组高度控制 */
   box-sizing: border-box;
 }
 
 /* 外层灰色边框 */
+/* height 由 contentAreaHeight - 20 动态设置（减去容器顶部 padding），确保底边与 hint_banner 间距 15px */
 .outer-frame {
   width: 100%;
-  height: 100%;
+  height: calc(100% - var(--button-group-total-height-single-with-hint)); /* 默认值：单层+hint */
   border: 1px solid var(--solid-border-color);
   border-radius: 9px;
   box-sizing: border-box;
   overflow: hidden;
-  position: relative; /* 用于按钮组绝对定位 */
 }
 
 /* 显示部分 */
@@ -36,10 +37,9 @@
   flex-shrink: 0;
 }
 
-/* 列表底部间距（为固定按钮组留出空间） */
-/* 按钮组高度约 97px + 底部间距 15px + 内容与按钮组间距 15px = 127px */
+/* 列表底部间距 */
 .list-bottom-spacer {
-  height: 127px;
+  height: 15px;
   flex-shrink: 0;
 }
 
@@ -194,17 +194,4 @@
 /* 列表项间距 */
 .item-spacing {
   height: 15px;
-}
-
-/* ==================== 底部按钮组（固定在外层灰框内底部） ==================== */
-/* 按钮样式已迁移至公共 button-group.wxss，此处仅保留布局相关样式 */
-.footer-btn-group {
-  position: absolute;
-  bottom: 15px;
-  left: 15px;
-  right: 15px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 9px;
-  overflow: hidden;
-  background-color: #fff; /* 白色背景遮挡滚动内容 */
 }
