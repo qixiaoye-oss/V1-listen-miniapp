@@ -45,14 +45,22 @@
         </view>
       </view>
       <view class="btn-group-embedded">
-        <tap-action icon="play" bind:tap="{{!audioPlay ? 'play' : 'stopAudio'}}">
-          <image src="/images/v2/play_bt.png" wx:if="{{!audioPlay}}"></image>
-          <image src="/images/v2/pause_bt.png" wx:if="{{audioPlay}}"></image>
-        </tap-action>
-        <tap-action icon="visible" bind:tap="showHidden">
-          <image wx:if="{{!showHidden}}" src="/images/v2/hidden_bt.png"></image>
-          <image wx:else src="/images/v2/visible_bt.png"></image>
-        </tap-action>
+        <view class="btn-pos-left">
+          <tap-action icon="play" bind:tap="{{!audioPlay ? 'play' : 'stopAudio'}}">
+            <image src="/images/v2/play_bt.png" wx:if="{{!audioPlay}}"></image>
+            <image src="/images/v2/pause_bt.png" wx:if="{{audioPlay}}"></image>
+          </tap-action>
+          <tap-action icon="visible" bind:tap="showHidden">
+            <image wx:if="{{!showHidden}}" src="/images/v2/hidden_bt.png"></image>
+            <image wx:else src="/images/v2/visible_bt.png"></image>
+          </tap-action>
+        </view>
+        <view class="btn-pos-right">
+          <tap-action icon="list" bind:tap="toArticle">
+            <view>原文内容</view>
+            <image src="/images/v2/list_bt.png"></image>
+          </tap-action>
+        </view>
       </view>
     </view>
   </view>

@@ -182,6 +182,10 @@ Page({
       showHidden: !this.data.showHidden
     })
   },
+  toArticle() {
+    const { partId } = this.options
+    this.navigateTo(`../article/index?partId=${partId}`, { checkReady: false })
+  },
   getDetail(isPull) {
     const _this = this
     api.request(this, '/question/v1/analysis/question/miniapp', { ...this.options }, isPull).then(res => {
