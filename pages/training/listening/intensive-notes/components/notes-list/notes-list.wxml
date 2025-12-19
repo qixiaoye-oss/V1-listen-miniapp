@@ -51,9 +51,8 @@
       </view>
       <!-- 底部按钮组（随列表滚动） -->
       <view class="footer-btn-group">
-        <view class="footer-btn-group__header btn-text-content">保持精听，越来越好</view>
-        <view class="footer-btn-group__divider"></view>
-        <view class="footer-btn-group__footer">
+        <view class="btn-group-hint-banner" data-icon="correct">保持精听，越来越好</view>
+        <view class="btn-group-single">
           <tap-action icon="save" bind:tap="onReturnTap">
             <view>保存并返回</view>
             <image src="/images/v2/save_bt.png"></image>
