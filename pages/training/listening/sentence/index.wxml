@@ -6,10 +6,10 @@
 <scroll-view class="base_view" scroll-y scroll-into-view="{{scrollIntoId}}" scroll-with-animation wx:if="{{!loading}}">
   <view class="layout_grid">
     <block wx:for="{{list}}" wx:key="id" wx:for-item="item" wx:for-index="idx">
-      <view id="ID{{item.id}}" class="list_container {{item.status == 0?'list_undone':''}}  {{scrollIntoId === 'ID'+item.id ? 'select' : ''}}">
+      <view id="ID{{item.id}}" class="list_container {{scrollIntoId === 'ID'+item.id ? 'select' : ''}}">
         <view class="listening_header ">
           <view class="list_index">{{idx+1}}/{{list.length}}</view>
-          <view wx:if="{{item.status == 1}}"></view>
+          <view class="status_listened" wx:if="{{item.status != 0}}">已收听</view>
           <view wx:if="{{item.status == 0}}">未收听</view>
         </view>
         <view class="listening_content">
