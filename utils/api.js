@@ -66,6 +66,7 @@ function request(that, url, data, hasToast, method) {
       success: function (res) {
         wx.hideLoading()
         if (res.data.code == '200') {
+          console.log(res.data)
           if (isNotEmpty(that) && !isEmpty(that.route) && !isEmpty(res.data.data)) {
             that.setData(res.data.data)
           }
