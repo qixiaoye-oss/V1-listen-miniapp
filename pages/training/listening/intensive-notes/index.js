@@ -210,44 +210,42 @@ Page({
     });
     this.setData({ detail, detailIndex, showDetail: true, list })
   },
-  editOver({ detail }) {
-    const { list } = this.data
-    if (detail.errMsg == 'ok') {
-      let index = list.findIndex((i) => i.id === detail.id)
+  // 保存事件处理（由 notes-editor 组件触发）
+  onSave({ detail }) {
+    const { id, html } = detail
+    const { list, isPc } = this.data
+
+    console.log('[onSave] 收到保存事件, id:', id, 'html长度:', html?.length)
+
+    // 更新本地列表数据
+    const index = list.findIndex((i) => i.id === id)
+    if (index !== -1) {
       this.setData({
-        [`list[${index}].reviseContent`]: detail.html
-      })
-      this.editRecord({
-        id: detail.id,
-        reviseContent: detail.html
+        [`list[${index}].reviseContent`]: html
       })
     }
-    this.setData({ showDetail: false })
-  },
-  editRecord(answer, showToast = true) {
-    api.request(this, '/record/v1/save/revise', answer, false, 'post').then(() => {
-      if (showToast) {
-        api.toast('保存成功')
+
+    // 调用保存API（确保 id 为字符串，避免大数精度丢失）
+    console.log('[onSave] 开始调用API, id类型:', typeof id)
+    api.request(this, '/record/v1/save/revise', {
+      id: String(id),
+      reviseContent: html
+    }, false, 'post').then(() => {
+      console.log('[onSave] API成功')
+      // 保存成功，回调组件
+      const editor = this.selectComponent('#notesEditor')
+      console.log('[onSave] selectComponent 结果:', !!editor)
+      if (editor) {
+        editor.onSaveSuccess(html)
       }
-    }).catch(() => {
-      // 保存失败仅提示
+    }).catch((err) => {
+      console.log('[onSave] API失败:', err)
+      // 保存失败，回调组件
+      const editor = this.selectComponent('#notesEditor')
+      if (editor) {
+        editor.onSaveFailed()
+      }
     })
-  },
-  // 实时自动保存
-  autoSave({ detail }) {
-    const { list } = this.data
-    if (detail.id) {
-      let index = list.findIndex((i) => i.id === detail.id)
-      if (index !== -1) {
-        this.setData({
-          [`list[${index}].reviseContent`]: detail.html
-        })
-        this.editRecord({
-          id: detail.id,
-          reviseContent: detail.html
-        }, false) // 静默保存，不显示提示
-      }
-    }
   },
   returnPage() {
     this.navigateBack()

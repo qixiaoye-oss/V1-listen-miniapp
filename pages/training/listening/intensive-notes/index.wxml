@@ -19,12 +19,12 @@
   <block wx:if="{{isPc}}">
     <view class="right-body">
       <notes-editor
+        id="notesEditor"
         detail="{{detail}}"
         detailIndex="{{detailIndex}}"
         nowPlayAudio="{{nowPlayAudio}}"
         nowPlaySmallAudio="{{nowPlaySmallAudio}}"
-        bind:ok="editOver"
-        bind:autosave="autoSave"
+        bind:save="onSave"
         bind:playSegment="onPlaySegment"
       ></notes-editor>
     </view>
@@ -32,12 +32,12 @@
   <block wx:else>
     <page-container show="{{showDetail}}" position="right" overlay="{{false}}" duration="200">
       <notes-editor
+        id="notesEditor"
         detail="{{detail}}"
         detailIndex="{{detailIndex}}"
         nowPlayAudio="{{nowPlayAudio}}"
         nowPlaySmallAudio="{{nowPlaySmallAudio}}"
-        bind:ok="editOver"
-        bind:autosave="autoSave"
+        bind:save="onSave"
         bind:playSegment="onPlaySegment"
       ></notes-editor>
     </page-container>
