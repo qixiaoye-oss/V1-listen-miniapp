@@ -223,22 +223,19 @@ Page({
       })
     }
 
-    // 获取编辑器组件实例
-    const editorSelector = isPc ? '.right-body notes-editor' : 'page-container notes-editor'
-
     // 调用保存API
     api.request(this, '/record/v1/save/revise', {
       id,
       reviseContent: html
     }, false, 'post').then(() => {
       // 保存成功，回调组件
-      const editor = this.selectComponent(editorSelector)
+      const editor = this.selectComponent('#notesEditor')
       if (editor) {
         editor.onSaveSuccess(html)
       }
     }).catch(() => {
       // 保存失败，回调组件
-      const editor = this.selectComponent(editorSelector)
+      const editor = this.selectComponent('#notesEditor')
       if (editor) {
         editor.onSaveFailed()
       }

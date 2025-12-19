@@ -19,6 +19,7 @@
   <block wx:if="{{isPc}}">
     <view class="right-body">
       <notes-editor
+        id="notesEditor"
         detail="{{detail}}"
         detailIndex="{{detailIndex}}"
         nowPlayAudio="{{nowPlayAudio}}"
@@ -31,6 +32,7 @@
   <block wx:else>
     <page-container show="{{showDetail}}" position="right" overlay="{{false}}" duration="200">
       <notes-editor
+        id="notesEditor"
         detail="{{detail}}"
         detailIndex="{{detailIndex}}"
         nowPlayAudio="{{nowPlayAudio}}"
