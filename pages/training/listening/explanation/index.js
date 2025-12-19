@@ -145,22 +145,24 @@ Page({
 
   // 根据当前播放时间更新高亮状态
   setSentencePlayingStatus() {
-    const { question, playType, currentSentenceIdx } = this.data
-    if (!question || !question.sentenceList || playType !== 'single') return
+    const { question } = this.data
+    if (!question?.sentenceList) return
 
-    const sentenceIdx = currentSentenceIdx ?? 0
-    const sentenceList = question.sentenceList
-    if (!sentenceList[sentenceIdx] || !sentenceList[sentenceIdx].list) return
+    // 遍历所有句子和片段，找到当前播放位置
+    for (let sIdx = 0; sIdx < question.sentenceList.length; sIdx++) {
+      const list = question.sentenceList[sIdx].list
+      if (!list) continue
 
-    const list = sentenceList[sentenceIdx].list
-    for (let i = 0; i < list.length; i++) {
-      const leftTime = audioApi.millis2Seconds(list[i].startTimeMillis) - 0.1
-      const rightTime = audioApi.millis2Seconds(list[i].endTimeMillis)
-      if (audio.currentTime >= leftTime && audio.currentTime <= rightTime) {
-        if (this.data.playingSmallIndex !== i) {
-          this.setData({ playingSmallIndex: i })
+      for (let i = 0; i < list.length; i++) {
+        const leftTime = audioApi.millis2Seconds(list[i].startTimeMillis) - 0.1
+        const rightTime = audioApi.millis2Seconds(list[i].endTimeMillis)
+
+        if (audio.currentTime >= leftTime && audio.currentTime <= rightTime) {
+          if (this.data.currentSentenceIdx !== sIdx || this.data.playingSmallIndex !== i) {
+            this.setData({ currentSentenceIdx: sIdx, playingSmallIndex: i })
+          }
+          return
         }
-        return
       }
     }
   },

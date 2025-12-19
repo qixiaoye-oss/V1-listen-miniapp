@@ -17,8 +17,7 @@ Page({
     // 音频播放状态
     nowPlayAudio: -1,        // 当前播放的大句子索引
     nowPlaySmallAudio: -1,   // 当前播放的小片段索引
-    audioEndTime: 0,         // 当前播放片段结束时间
-    playType: 'whole'        // 播放类型：'whole' 整句，'single' 片段
+    audioEndTime: 0          // 当前播放片段结束时间
   },
   onLoad(options) {
     this.startAudioPageLoading()
@@ -94,11 +93,11 @@ Page({
       })
     })
     audioContext.onTimeUpdate(() => {
-      const { audioEndTime, playType } = this.data
+      const { audioEndTime } = this.data
       // 更新当前播放片段高亮
       this.updatePlayingStatus()
       // 片段播放结束检测
-      if (playType === 'single' && audioEndTime > 0 && audioContext.currentTime >= audioEndTime) {
+      if (audioEndTime > 0 && audioContext.currentTime >= audioEndTime) {
         this.stopAudio()
       }
     })
@@ -109,7 +108,7 @@ Page({
 
   // 更新播放状态（高亮当前片段）
   updatePlayingStatus() {
-    const { nowPlayAudio, list, playType } = this.data
+    const { nowPlayAudio, list } = this.data
     if (nowPlayAudio < 0 || !list || !list[nowPlayAudio]) return
 
     const sentence = list[nowPlayAudio].list
@@ -160,8 +159,7 @@ Page({
 
     this.setData({
       nowPlayAudio: index,
-      audioEndTime: audioApi.millis2Seconds(paragraph.endTimeMillis),
-      playType: 'whole'
+      audioEndTime: audioApi.millis2Seconds(paragraph.endTimeMillis)
     })
 
     audioContext.seek(startTime)
@@ -192,8 +190,7 @@ Page({
     this.setData({
       nowPlayAudio: sentenceIndex,
       nowPlaySmallAudio: segmentIndex,
-      audioEndTime: audioApi.millis2Seconds(segment.endTimeMillis),
-      playType: 'single'
+      audioEndTime: audioApi.millis2Seconds(segment.endTimeMillis)
     })
 
     audioContext.seek(startTime)

@@ -218,7 +218,6 @@
 
 .saving-dots {
   display: inline-flex;
-  width: 1.5em;
 }
 
 .saving-dots .dot {
