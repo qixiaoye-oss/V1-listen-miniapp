@@ -37,9 +37,9 @@
   flex-shrink: 0;
 }
 
-/* 列表底部间距 */
+/* 列表底部间距（item-spacing 已提供 15px，此处无需额外间距） */
 .list-bottom-spacer {
-  height: 15px;
+  height: 0;
   flex-shrink: 0;
 }
 
