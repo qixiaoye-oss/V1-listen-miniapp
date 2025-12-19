@@ -1,6 +1,6 @@
 <wxs src="/utils/util.wxs" module="wxsUtil" />
 <view class="label-list-base-container">
-  <view class="outer-frame">
+  <view class="outer-frame" style="height: {{contentAreaHeight ? (contentAreaHeight - 20) + 'px' : ''}}">
     <scroll-view scroll-y class="label-list-container" enhanced enable-flex show-scrollbar="{{false}}">
       <view class="list-top-spacer"></view>
       <view class="label-item-cell" wx:for="{{list}}" wx:key="item">
@@ -30,7 +30,7 @@
         <view class="buts-cell">
           <view class="state but-warning warning-bg" wx:if="{{item.status === '2'}}">需要再次复习</view>
           <view class="state but-success success-bg" wx:if="{{item.status === '1'}}">有效复习</view>
-          <view class="tag tag__multi--green" wx:if="{{item.reviseContent}}">有订正</view>
+          <view class="tag tag__multi--green" wx:if="{{wxsUtil.hasReviseContent(item.reviseContent)}}">有订正</view>
           <view class="btn-pos-right">
             <tap-action icon="play" bind:tap="playAudio" data-index="{{index}}">
               <image src="/images/v2/pause_bt.png" data-value="pause" wx:if="{{nowPlayAudio == index}}"></image>
@@ -49,18 +49,18 @@
       </view>
       <view class="item-spacing"></view>
       </view>
-      <!-- 底部按钮组（随列表滚动） -->
-      <view class="footer-btn-group">
-        <view class="footer-btn-group__header btn-text-content">保持精听，越来越好</view>
-        <view class="footer-btn-group__divider"></view>
-        <view class="footer-btn-group__footer">
-          <tap-action icon="save" bind:tap="onReturnTap">
-            <view>保存并返回</view>
-            <image src="/images/v2/save_bt.png"></image>
-          </tap-action>
-        </view>
-      </view>
+      <!-- 底部留白 -->
       <view class="list-bottom-spacer"></view>
     </scroll-view>
+  </view>
+</view>
+<!-- 底部按钮组（固定在视窗底部） -->
+<view class="btn-page-bottom">
+  <view class="btn-group-hint-banner" data-icon="correct">保持精听，越来越好</view>
+  <view class="btn-group-single">
+    <tap-action icon="save" bind:tap="onReturnTap">
+      <view>保存并返回</view>
+      <image src="/images/v2/save_bt.png"></image>
+    </tap-action>
   </view>
 </view>

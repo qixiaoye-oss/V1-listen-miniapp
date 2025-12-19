@@ -31,6 +31,7 @@ page {
   position: relative;
   top: 20px;
   background: var(--solid-border-color);
+  z-index: 101; /* 高于按钮组蒙版 (z-index: 100) */
 }
 
 .right-body {

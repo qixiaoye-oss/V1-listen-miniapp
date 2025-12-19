@@ -210,9 +210,7 @@ Page({
   // 保存事件处理（由 notes-editor 组件触发）
   onSave({ detail }) {
     const { id, html } = detail
-    const { list, isPc } = this.data
-
-    console.log('[onSave] 收到保存事件, id:', id, 'html长度:', html?.length)
+    const { list } = this.data
 
     // 更新本地列表数据
     const index = list.findIndex((i) => i.id === id)
@@ -223,22 +221,19 @@ Page({
     }
 
     // 调用保存API（确保 id 为字符串，避免大数精度丢失）
-    console.log('[onSave] 开始调用API, id类型:', typeof id)
+    const _this = this
     api.request(this, '/record/v1/save/revise', {
       id: String(id),
       reviseContent: html
     }, false, 'post').then(() => {
-      console.log('[onSave] API成功')
       // 保存成功，回调组件
-      const editor = this.selectComponent('#notesEditor')
-      console.log('[onSave] selectComponent 结果:', !!editor)
+      const editor = _this.selectComponent('#notesEditor')
       if (editor) {
         editor.onSaveSuccess(html)
       }
-    }).catch((err) => {
-      console.log('[onSave] API失败:', err)
+    }).catch(() => {
       // 保存失败，回调组件
-      const editor = this.selectComponent('#notesEditor')
+      const editor = _this.selectComponent('#notesEditor')
       if (editor) {
         editor.onSaveFailed()
       }

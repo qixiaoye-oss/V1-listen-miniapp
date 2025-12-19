@@ -1,6 +1,8 @@
 const api = getApp().api
+const buttonGroupHeight = require('../../../../../../behaviors/button-group-height')
 
 Component({
+  behaviors: [buttonGroupHeight],
   properties: {
     list: Array,
     // 从父页面接收的播放状态

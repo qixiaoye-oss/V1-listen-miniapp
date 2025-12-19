@@ -34,10 +34,14 @@
   </view>
 </view>
 <view class="btn-page-bottom" wx:if="{{_isDataReady}}">
-  <view class="btn-group-hint-banner" data-icon="flag">
-    <text wx:if="{{correctness > 71}}">非常棒！有7+的潜质！只分析错题即可！</text>
-    <text wx:if="{{correctness > 30 && correctness < 70}}">还不错！分数预估6.5分上下！如果有蒙对的题，建议整篇精听，并做好标注！</text>
-    <text wx:if="{{correctness < 30}}">不太好！分数预估6分以下！必须整篇精听，并做好标注！</text>
+  <view class="btn-group-hint-banner" data-icon="correct" wx:if="{{correctness >= 70}}">
+    <text>正确率非常好，可不做精听。</text>
+  </view>
+  <view class="btn-group-hint-banner" data-icon="correct" wx:elif="{{correctness >= 30}}">
+    <text>正确率不错，可自行选择是否做精听。</text>
+  </view>
+  <view class="btn-group-hint-banner" data-icon="flag" wx:else>
+    <text>正确率不好，请务必做精听。</text>
   </view>
   <view class="btn-group-single">
     <tap-action icon="save" bind:tap="returnPage">
