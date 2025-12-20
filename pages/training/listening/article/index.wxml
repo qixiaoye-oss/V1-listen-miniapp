@@ -4,7 +4,7 @@
 <skeleton type="detail" loading="{{loading}}" />
 <view class="article-page" wx:if="{{_isDataReady}}">
   <!-- padding-bottom = buttonGroupHeight，确保内容底边距离按钮组顶边 15px -->
-  <view class="article-page__content" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : ''}}">
+  <view class="article-page__content" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : 'var(--button-group-total-height-single)'}}">
     <view class="sub-item">
       <view class="sub-item__header">
         <view class="tag">文本</view>
