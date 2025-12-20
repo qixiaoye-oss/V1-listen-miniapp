@@ -1,6 +1,6 @@
 <wxs src="/utils/util.wxs" module="wxsUtil" />
 <view class="label-list-base-container">
-  <view class="outer-frame" style="height: {{contentAreaHeight ? (contentAreaHeight - 20) + 'px' : ''}}">
+  <view class="outer-frame" style="height: {{contentAreaHeight ? (contentAreaHeight - 20) + 'px' : 'calc(100vh - var(--button-group-total-height-single-with-hint) - 20px)'}}">
     <scroll-view scroll-y class="label-list-container" enhanced enable-flex show-scrollbar="{{false}}">
       <view class="list-top-spacer"></view>
       <view class="label-item-cell" wx:for="{{list}}" wx:key="item">

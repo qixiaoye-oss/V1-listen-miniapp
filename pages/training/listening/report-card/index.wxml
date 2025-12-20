@@ -5,7 +5,7 @@
 <skeleton type="list" loading="{{loading}}" rows="5" />
 <view class="report-card-page" wx:if="{{_isDataReady}}">
   <!-- padding-bottom = buttonGroupHeight，确保内容底边距离按钮组顶边 15px -->
-  <view class="report-card-page__content" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : ''}}">
+  <view class="report-card-page__content" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : 'var(--button-group-total-height-single-with-hint)'}}">
     <block wx:for="{{parts}}" wx:for-item="part" wx:for-index="partIndex" wx:key="id">
       <view class="header_container">
         <view class="header_title">{{part.partNum}}</view>

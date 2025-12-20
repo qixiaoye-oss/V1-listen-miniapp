@@ -2,7 +2,7 @@
 <import src="/templates/audio-loading.wxml" />
 <template is="pageLoading" data="{{loading, loadProgress}}" />
 <template is="audioLoading" data="{{audioDownProgress}}" />
-<view class="page font_color_base" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : ''}}">
+<view class="page font_color_base" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : 'var(--button-group-total-height)'}}">
   <view class="header_container" wx:for="{{parts}}" wx:for-item="part" wx:for-index="partIndex" wx:key="id">
     <view class="header_title">
       <view>{{part.partNum}}</view>
