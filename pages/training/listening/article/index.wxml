@@ -7,7 +7,7 @@
   <view class="article-page__content" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : 'var(--button-group-total-height-single)'}}">
     <view class="sub-item">
       <view class="sub-item__header">
-        <view class="tag">文本</view>
+        <view class="tag tag--dynamic-translucent" style="--tag-color:rgba(0,0,0,0.5);--tag-color-bg:rgba(0,0,0,0.15);">文本</view>
       </view>
       <view class="sub-item__intervals"></view>
       <view class="sub-item__header">

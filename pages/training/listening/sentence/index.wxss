@@ -22,7 +22,7 @@
 }
 
 .listening_header {
-  color: rgba(0, 0, 0, 0.3);
+  color: var(--main-gray-color);
   position: relative;
   display: flex;
   font-size: 14px;

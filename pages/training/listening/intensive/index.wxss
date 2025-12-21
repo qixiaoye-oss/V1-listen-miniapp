@@ -97,7 +97,7 @@ text {
 .writing-label {
   font-size: 12px;
   line-height: 1;
-  color: rgba(0, 0, 0, 0.3);
+  color: var(--main-gray-color);
   margin-bottom: 12px;
 }
 
@@ -110,7 +110,7 @@ textarea {
 }
 
 .pl-class {
-  color: rgba(0, 0, 0, 0.3);
+  color: var(--main-gray-color);
   font-size: 16px;
   position: absolute;
   top: 40px;

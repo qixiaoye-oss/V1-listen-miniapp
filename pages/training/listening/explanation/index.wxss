@@ -9,10 +9,6 @@
   justify-content: center;
 }
 
-.tag--transparent {
-  background-color: var(--theme-color);
-}
-
 .explain__question {
   padding: 15px;
   display: flex;

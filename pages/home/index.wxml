@@ -53,8 +53,8 @@
                   <view class="home-card__title">{{subject.title}}</view>
                 </view>
                 <view class="home-card__footer">
-                  <view class="tag tag--transparent" style="color:{{group.colorRgb}};border-color:{{group.colorRgb}}">共{{subject.subItemCount}}{{subject.subItemCategory}}</view>
-                  <view class="tag tag--orange" style="background:{{group.color}}" wx:if="{{subject.category}}">{{subject.category}}</view>
+                  <view class="tag tag--dynamic-outline" style="--tag-color:{{group.colorRgb}}">共{{subject.subItemCount}}{{subject.subItemCategory}}</view>
+                  <view class="tag tag--dynamic-solid" style="--tag-color:{{group.color}}" wx:if="{{subject.category}}">{{subject.category}}</view>
                 </view>
               </view>
             </view>

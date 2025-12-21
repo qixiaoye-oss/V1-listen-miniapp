@@ -14,8 +14,8 @@
           <view class="tip" wx:if="{{item.tip}}">{{item.tip}}</view>
         </view>
         <view class="group__item--state">
-          <view class="switch__tag tag--green" wx:if="{{item.value == 'open' || item.value == true}}">打开</view>
-          <view class="switch__tag tag--gray" wx:if="{{item.value != 'open' && item.value != true}}">关闭</view>
+          <view class="tag tag--green switch__tag" wx:if="{{item.value == 'open' || item.value == true}}">打开</view>
+          <view class="tag tag--dynamic-translucent switch__tag" style="--tag-color:var(--main-gray-color);--tag-color-bg:rgba(0,0,0,0.15);" wx:if="{{item.value != 'open' && item.value != true}}">关闭</view>
           <switch
             class="switch-original"
             checked="{{item.value == 'open' || item.value == true}}"
