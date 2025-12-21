@@ -36,5 +36,5 @@
   text-align: center;
   border-radius: 3px;
   color: #ffffff;
-  background: #00d26a;
+  background: var(--main-green-color);
 }

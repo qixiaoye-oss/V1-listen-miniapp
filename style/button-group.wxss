@@ -35,7 +35,7 @@
 page {
   /* 边框相关变量 */
   --button-group-border-width: 1px;
-  --button-group-border-color: rgba(0, 0, 0, 0.3); /* 边框颜色 */
+  --button-group-border-color: var(--main-gray-color); /* 边框颜色 */
   --button-group-border-radius: 9px; /* 圆角半径 */
   --button-group-padding: 15px; /* 按钮组内边距 */
   --button-group-gap: 15px; /* 按钮组间距 */
@@ -79,11 +79,11 @@ page {
   /* 单层 + hint_banner(单行)：102px + 39.6px = 141.6px */
   --button-group-total-height-single-with-hint: 141.6px;
 
-  /* 按钮颜色系统 */
-  --button-color-audio: #00A6ED; /* 音频类 - 蓝色 */
-  --button-color-correct: #00D26A; /* 正确答案 - 绿色 */
-  --button-color-wrong: #F92F60; /* 错误答案 - 红色 */
-  --button-color-list: #FFB02D; /* 列表按钮 - 橙色 */
+  /* 按钮颜色系统（引用主色变量） */
+  --button-color-audio: var(--main-blue-color); /* 音频类 - 蓝色 */
+  --button-color-correct: var(--main-green-color); /* 正确答案 - 绿色 */
+  --button-color-wrong: var(--main-red-color); /* 错误答案 - 红色 */
+  --button-color-list: var(--main-orange-color); /* 列表按钮 - 橙色 */
   --button-color-setting: #998EA4; /* 设置按钮 - 灰紫 */
   --button-color-visible: #7D4533; /* 显示隐藏 - 棕色 */
   --button-color-label: #F8312F; /* 标签类 - 红色 */
@@ -175,7 +175,7 @@ page {
   padding-bottom: calc(var(--hint-banner-padding-y) + var(--button-group-border-radius));
 }
 
-/* hint_banner 颜色映射 - 蓝色 #00A6ED */
+/* hint_banner 颜色映射 - 蓝色 */
 .btn-group-hint-banner[data-icon="save"],
 .btn-group-hint-banner[data-icon="play"],
 .btn-group-hint-banner[data-icon="pause"],
@@ -188,13 +188,13 @@ page {
 .btn-group-hint-banner[data-icon="go"],
 .btn-group-hint-banner[data-icon="stop"],
 .btn-group-hint-banner[data-icon="down"] {
-  color: #00A6ED;
+  color: var(--main-blue-color);
   background-color: rgba(0, 166, 237, 0.15);
 }
 
-/* hint_banner 颜色映射 - 绿色 #00D26A */
+/* hint_banner 颜色映射 - 绿色 */
 .btn-group-hint-banner[data-icon="correct"] {
-  color: #00D26A;
+  color: var(--main-green-color);
   background-color: rgba(0, 210, 106, 0.15);
 }
 
@@ -212,9 +212,9 @@ page {
   background-color: rgba(125, 69, 51, 0.15);
 }
 
-/* hint_banner 颜色映射 - 橙色 #FFB02E */
+/* hint_banner 颜色映射 - 橙色 */
 .btn-group-hint-banner[data-icon="list"] {
-  color: #FFB02E;
+  color: var(--main-orange-color);
   background-color: rgba(255, 176, 46, 0.15);
 }
 
@@ -431,7 +431,7 @@ page {
  * </tap-action>
  */
 
-/* 蓝色 #00A6ED */
+/* 蓝色 */
 [data-icon="save"],
 [data-icon="play"],
 [data-icon="pause"],
@@ -444,13 +444,13 @@ page {
 [data-icon="go"],
 [data-icon="stop"],
 [data-icon="down"] {
-  color: #00A6ED;
+  color: var(--main-blue-color);
   background-color: rgba(0, 166, 237, 0.15);
 }
 
-/* 绿色 #00D26A */
+/* 绿色 */
 [data-icon="correct"] {
-  color: #00D26A;
+  color: var(--main-green-color);
   background-color: rgba(0, 210, 106, 0.15);
 }
 
@@ -468,9 +468,9 @@ page {
   background-color: rgba(125, 69, 51, 0.15);
 }
 
-/* 橙色 #FFB02E */
+/* 橙色 */
 [data-icon="list"] {
-  color: #FFB02E;
+  color: var(--main-orange-color);
   background-color: rgba(255, 176, 46, 0.15);
 }
 
@@ -568,13 +568,13 @@ page {
 
 /* 退出/放弃按钮 */
 .btn--quit {
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--main-gray-color);
   color: #212121;
 }
 
 /* 灰色文字 */
 .grey-font-color {
-  color: rgba(0, 0, 0, 0.3);
+  color: var(--main-gray-color);
 }
 
 /* ==================== 10. 按钮角标 ==================== */
@@ -616,8 +616,8 @@ page {
 [data-icon="pause"] .btn-corner-mark,
 [data-icon="replay"] .btn-corner-mark,
 [data-icon="go"] .btn-corner-mark {
-  color: #00A6ED;
-  border-color: #00A6ED;
+  color: var(--main-blue-color);
+  border-color: var(--main-blue-color);
 }
 
 /* 兼容旧版 - 录音角标颜色 */
