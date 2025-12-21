@@ -23,8 +23,8 @@
             <text>{{chapter.title}}</text>
           </view>
         </view>
-        <view class="tag--right tag tag--transparent" style="color: {{chapter.colorRgb}};border-color: {{chapter.colorRgb}};">{{chapter.subItemCount}}{{chapter.subItemCategory}}</view>
-        <view class="tag tag--transparent" style="color: {{chapter.colorRgb}};border-color: {{chapter.colorRgb}};">完成{{chapter.progress}}%</view>
+        <view class="tag tag--dynamic-outline tag--right" style="--tag-color:{{chapter.colorRgb}}">{{chapter.subItemCount}}{{chapter.subItemCategory}}</view>
+        <view class="tag tag--dynamic-outline" style="--tag-color:{{chapter.colorRgb}}">完成{{chapter.progress}}%</view>
       </view>
     </tap-action>
   </block>

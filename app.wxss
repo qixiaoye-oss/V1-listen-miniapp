@@ -23,6 +23,13 @@ page {
   --theme-color: rgba(0, 166, 237, 1);
   --theme-bcakground-color: rgba(0, 166, 237, 0.15);
 
+  /* ===== 统一主色定义（用于 tag 等公用组件）===== */
+  --main-gray-color: rgba(0, 0, 0, 0.3);
+  --main-green-color: #00D26A;
+  --main-blue-color: #00A6ED;
+  --main-red-color: #F92F60;
+  --main-orange-color: #FFB02E;
+
   /* ===== 参考项目变量系统（用于label页面样式复刻）===== */
   /* 基础颜色 */
   --color-1: #3478f6;

@@ -8,7 +8,7 @@
 <view class="explain" wx:if="{{_isDataReady}}">
   <view class="explain__question">
     <view>
-      <view class="tag tag--transparent">题目</view>
+      <view class="tag tag--dynamic-solid" style="--tag-color:var(--theme-color)">题目</view>
     </view>
     <view class="explain__question--option">
       <view><text user-select='true'>{{wxsUtil.formatNull(question.content,'')}}</text></view>
@@ -21,7 +21,7 @@
   </view>
   <view class="explain__article" wx:if="{{question.sentenceList.length > 0}}">
     <view>
-      <view class="tag tag--transparent">原文</view>
+      <view class="tag tag--dynamic-solid" style="--tag-color:var(--theme-color)">原文</view>
     </view>
     <view class="explain__article--content">
       <view wx:for="{{question.sentenceList}}" wx:key="item" wx:for-item="sentence" wx:for-index="sentenceIdx">
@@ -74,7 +74,7 @@
     </view>
   </view>
   <view class="explain__analysis--ordinary" wx:else>
-    <view class="tag tag--transparent">解析</view>
+    <view class="tag tag--dynamic-solid" style="--tag-color:var(--theme-color)">解析</view>
     <view class="content">
       <!-- <text user-select='true'>{{wxsUtil.formatNull(question.analysisText,'')}}</text> -->
       <rich-text nodes="{{question.analysisText}}"></rich-text>
