@@ -165,7 +165,7 @@
 }
 
 .success-bg {
-  background: rgba(0, 210, 106, 0.15);
+  background: var(--main-green-color-bg);
   border-color: transparent;
 }
 

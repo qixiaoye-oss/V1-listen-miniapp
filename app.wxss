@@ -23,11 +23,17 @@ page {
   --main-red-color: #F92F60;
   --main-orange-color: #FFB02E;
 
+  /* ===== 主色半透明背景（15%不透明度）===== */
+  --main-blue-color-bg: rgba(0, 166, 237, 0.15);
+  --main-green-color-bg: rgba(0, 210, 106, 0.15);
+  --main-red-color-bg: rgba(249, 47, 96, 0.15);
+  --main-orange-color-bg: rgba(255, 176, 46, 0.15);
+
   /* ===== 兼容别名（指向主色）===== */
   --solid-border-color: var(--main-gray-color);
   --dashed-border-color: var(--main-gray-color);
   --theme-color: var(--main-blue-color);
-  --theme-bcakground-color: rgba(0, 166, 237, 0.15);
+  --theme-bcakground-color: var(--main-blue-color-bg);
 
   /* ===== 仍在使用的辅助变量 ===== */
   --color-1: #3478f6;

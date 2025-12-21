@@ -49,7 +49,7 @@
   padding: 5px 10px;
   display: flex;
   align-items: center;
-  background-color: rgba(0, 166, 237, 0.15);
+  background-color: var(--main-blue-color-bg);
 }
 
 .review-result__img {
