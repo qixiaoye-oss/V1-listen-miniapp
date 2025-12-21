@@ -43,8 +43,8 @@
   right: 15px;
   top: 15px;
   font-size: 16px;
-  color: var(--main-blue-color);
-  border: 1px solid var(--main-blue-color);
+  color: rgba(0, 166, 237, 1);
+  border: 1px solid rgba(0, 166, 237, 1);
   border-radius: 3px;
   padding: 5px 10px;
   display: flex;
@@ -206,7 +206,7 @@
 /* 保存失败提示 */
 .save-error-tip {
   font-size: 12px;
-  color: var(--main-red-color);
+  color: #F92F60;
   white-space: nowrap;
 }
 
