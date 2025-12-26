@@ -30,9 +30,10 @@ Page({
       wx.navigateTo({
         url: this.data.noPermissionUrl,
       })
+    }else{
+      const { url } = this.data
+      this.navigateTo(`${url[type]}?subjectId=${id}`, { checkReady: false })
     }
-    const { url } = this.data
-    this.navigateTo(`${url[type]}?subjectId=${id}`, { checkReady: false })
   },
   // 进入补充说明列表
   toNoticeListPage() {
