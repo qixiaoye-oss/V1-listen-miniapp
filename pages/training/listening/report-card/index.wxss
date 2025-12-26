@@ -79,7 +79,7 @@ page {
   font-weight: bold;
   line-height: 1.4;
   font-size: 16px;
-  padding-left: 38px;
+  padding-left: 43px;
   margin-top: 10px;
 }
 
