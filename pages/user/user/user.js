@@ -6,19 +6,17 @@ const loadError = require('../../../behaviors/loadError')
 Page({
   behaviors: [pageGuard.behavior, pageLoading, loadError],
   data: {
-    version: '1.0.2',
+    version: '1.0.0',
     permission_duration: '游客'
   },
   onShow: function () {
     this.getUser(this)
     this.startLoading()
-    const systemInfo = wx.getSystemInfoSync();
-    const tabBarHeight = systemInfo.windowHeight - systemInfo.statusBarHeight;
-    const miniProgram = wx.getAccountInfoSync();
-    this.setData({
-      version: miniProgram.miniProgram.version || '1.0.2',
-      bottom: tabBarHeight - 90
-    })
+    const accountInfo = wx.getAccountInfoSync()
+    const version = accountInfo.miniProgram.version
+    if (version) {
+      this.setData({ version })
+    }
   },
   onShareAppMessage: function () {
     return api.share('用户中心', this)
