@@ -56,7 +56,7 @@
 </view>
 <!-- 底部按钮组（固定在视窗底部） -->
 <view class="btn-page-bottom">
-  <view class="btn-group-hint-banner" data-icon="correct">保持精听，越来越好</view>
+  <view class="btn-group-hint-banner" data-icon="correct">保持精听，越听越懂！</view>
   <view class="btn-group-single">
     <tap-action icon="save" bind:tap="onReturnTap">
       <view>保存并返回</view>

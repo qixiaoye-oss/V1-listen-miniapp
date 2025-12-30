@@ -14,7 +14,7 @@
       <view class="review-result__result">{{detail.aiReviewResult}}</view>
       <view class="review-btn">
         <view class="review-btn__title">
-          <image class="review-result__img" src="/images/v2/rebot.png"></image>
+          <image class="review-result__img" src="/images/v2/robot_bt.png"></image>
           <view>AI反馈</view>
         </view>
         <view class="review-btn__refresh" bind:tap="refreshAi">
@@ -40,7 +40,6 @@
           <i class="candidate-color" style="background: #F68C40;" data-name="color" data-value="#F68C40"></i>
           <i class="candidate-color" style="background: #FD2F35;" data-name="color" data-value="#FD2F35"></i>
           <i class="candidate-color" style="background: #5BD7A4;" data-name="color" data-value="#5BD7A4"></i>
-          <image src="/images/reeor.png" data-name="color"></image>
         </view>
         <view wx:if="{{formats.backgroundColor === ''}}" class="candidate-colors-cell bg-candidate-colors-cell">
           <i class="candidate-color" style="background: #000000;" data-name="backgroundColor" data-value="#000000"></i>
@@ -49,7 +48,6 @@
           <i class="candidate-color" style="background: #F68C40;" data-name="backgroundColor" data-value="#F68C40"></i>
           <i class="candidate-color" style="background: #FD2F35;" data-name="backgroundColor" data-value="#FD2F35"></i>
           <i class="candidate-color" style="background: #5BD7A4;" data-name="backgroundColor" data-value="#5BD7A4"></i>
-          <image src="/images/reeor.png" data-name="backgroundColor"></image>
         </view>
       </view>
       <view class="editor-point">
