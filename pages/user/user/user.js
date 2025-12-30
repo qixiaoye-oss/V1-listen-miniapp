@@ -7,7 +7,7 @@ Page({
   behaviors: [pageGuard.behavior, pageLoading, loadError],
   data: {
     version: '1.0.0',
-    permission_duration: '游客'
+    permission_duration: '免费版'
   },
   onShow: function () {
     this.getUser(this)
