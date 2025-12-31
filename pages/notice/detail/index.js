@@ -43,7 +43,7 @@ Page({
   // ===========数据获取 Start===========
   // 访问接口获取数据
   listData() {
-    api.request(this, `/popular/science/v1/detail//${this.options.id}`, {}, true).then(() => {
+    api.request(this, `/popular/science/v1/detail/${this.options.id}`, {}, true).then(() => {
       this.setDataReady()
       this.finishLoading()
       // 延迟计算，确保按钮组渲染完成

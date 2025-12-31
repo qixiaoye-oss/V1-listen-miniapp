@@ -176,3 +176,10 @@
 .home-view-all > tap-action {
   margin-left: auto;
 }
+
+/* ========== 5. 宽屏适配 ========== */
+@media screen and (min-width: 768px) {
+  .home-main-item__content--grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
