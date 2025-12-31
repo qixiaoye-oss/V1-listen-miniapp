@@ -36,12 +36,10 @@
   font-weight: normal !important;
 }
 
-/* 翻译内部text：背景色应用在text上实现inline效果 */
+/* 翻译内部text：多text元素渲染，与原文处理方式一致 */
 .sentence-block__translate text {
   background-color: #f2f2f2;
   line-height: 1.4 !important;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
 }
 
 .sentence-block__translate--hidden text {

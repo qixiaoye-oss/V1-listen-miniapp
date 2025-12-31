@@ -10,8 +10,12 @@
       data-idx="{{index}}"
     >{{item.content}}</text>
   </view>
-  <!-- 翻译部分：背景色应用在text上实现与原文一致的inline效果 -->
+  <!-- 翻译部分：拆分成多个text元素，与原文处理方式一致 -->
   <view class="sentence-block__translate {{hidden ? 'sentence-block__translate--hidden' : ''}}">
-    <text user-select="{{true}}">{{translate || '暂无翻译'}}</text>
+    <text
+      wx:for="{{translateParts}}"
+      wx:key="index"
+      user-select="{{true}}"
+    >{{item}}</text>
   </view>
 </view>
