@@ -225,6 +225,21 @@ function parseParams(json) {
   }
 }
 
+/**
+ * 微信分享
+ */
+function share(title, that, imgUrl) {
+  let pararm = {
+    ...that.options,
+    "openType": "share"
+  }
+  return {
+    title: decodeURIComponent(title),
+    path: that.route + parseParams(pararm),
+    imageUrl: imgUrl
+  }
+}
+
 module.exports = {
   wxPromisify: wxPromisify,
   request: request,
@@ -233,5 +248,6 @@ module.exports = {
   isNotEmpty: isNotEmpty,
   toast: toast,
   modal: modal,
-  parseParams: parseParams
+  parseParams: parseParams,
+  share:share
 }
