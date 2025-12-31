@@ -27,9 +27,7 @@ Page({
   // ===========业务操作 Start===========
   toChildPage({ currentTarget: { dataset: { id, type, isInside } } }) {
     if (isInside === '0') {
-      wx.navigateTo({
-        url: this.data.noPermissionUrl,
-      })
+      this.listPopularScienceByModule()
     }else{
       const { url } = this.data
       this.navigateTo(`${url[type]}?subjectId=${id}`, { checkReady: false })
@@ -63,6 +61,14 @@ Page({
   listPopularScienceData() {
     api.request(this, '/popular/science/v1/miniapp/home', {}, true).catch(() => {
       // 科普数据非必需，静默失败
+    })
+  },
+  listPopularScienceByModule() {
+    api.request(this, '/popular/science/v1/list/no_permission/miniapp', {}, true).then(res=>{
+      const list = res.popularScienceList || []
+      if (list.length == 1){
+        this.navigateTo(`/pages/notice/detail/index?id=${list[0].id}`)
+      }
     })
   },
   // 重试加载
