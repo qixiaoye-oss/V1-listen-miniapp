@@ -21,7 +21,9 @@ page {
   color: var(--theme-color);
 }
 
-text {
+/* 仅针对页面特定区域的text，避免影响sentence-block组件 */
+.base-container text,
+.writing-cell text {
   line-height: 1;
 }
 

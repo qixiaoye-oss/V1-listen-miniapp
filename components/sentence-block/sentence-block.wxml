@@ -10,8 +10,10 @@
       data-idx="{{index}}"
     >{{item.content}}</text>
   </view>
-  <!-- 翻译部分：不可点击 -->
+  <!-- 翻译部分：不可点击，view容器提供背景覆盖整行 -->
   <view class="sentence-block__translate {{hidden ? 'sentence-block__translate--hidden' : ''}}">
-    <text class="sentence-block__translate-text" user-select="{{true}}">{{translate || '暂无翻译'}}</text>
+    <view class="sentence-block__translate-bg">
+      <text user-select="{{true}}">{{translate || '暂无翻译'}}</text>
+    </view>
   </view>
 </view>

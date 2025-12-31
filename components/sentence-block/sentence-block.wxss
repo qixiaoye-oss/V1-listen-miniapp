@@ -36,12 +36,18 @@
   font-weight: normal !important;
 }
 
-/* 翻译始终有灰色背景（与原文一致） */
-.sentence-block__translate-text {
+/* 翻译背景容器：使用view确保背景覆盖整行宽度 */
+.sentence-block__translate-bg {
   background-color: #f2f2f2;
+  display: inline;
 }
 
-.sentence-block__translate--hidden .sentence-block__translate-text {
+/* 翻译内部text继承父级样式 */
+.sentence-block__translate-bg text {
+  line-height: 1.4 !important;
+}
+
+.sentence-block__translate--hidden .sentence-block__translate-bg text {
   color: rgba(0, 0, 0, 0) !important;
 }
 
