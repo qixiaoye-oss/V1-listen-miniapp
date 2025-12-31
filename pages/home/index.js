@@ -21,7 +21,7 @@ Page({
     this.listPopularScienceData()
   },
   onShareAppMessage() {
-    return api.share('不刷语料库', this)
+    return api.share('考雅听力专项题库', this)
   },
   // ===========生命周期 End===========
   // ===========业务操作 Start===========

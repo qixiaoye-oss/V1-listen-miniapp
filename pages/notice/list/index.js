@@ -11,6 +11,9 @@ Page({
     this.startLoading()
     this.listData()
   },
+  onShareAppMessage() {
+    return api.share('考雅听力专项题库', this)
+  },
   // ===========生命周期 End===========
   // ===========业务操作 Start===========
   // 去往答题
