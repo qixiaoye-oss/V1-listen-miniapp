@@ -19,7 +19,7 @@ Page({
     }
   },
   onShareAppMessage: function () {
-    return api.share('用户中心', this)
+    return api.share('考雅听力专项题库', this)
   },
   toUpdateUserInfo() {
     this.navigateTo('/pages/user/login/login', { checkReady: false })
