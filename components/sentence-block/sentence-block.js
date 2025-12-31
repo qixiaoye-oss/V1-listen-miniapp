@@ -31,22 +31,6 @@ Component({
       value: 0
     }
   },
-  data: {
-    // 翻译拆分后的数组，用于多text元素渲染（与原文处理方式一致）
-    translateParts: []
-  },
-  observers: {
-    // 监听translate变化，拆分成数组以实现与原文一致的多text渲染
-    'translate': function(translate) {
-      if (translate) {
-        // 按中英文标点拆分，保留标点在前一段末尾
-        const parts = translate.match(/[^，。、；：！？""'',.\s]+[，。、；：！？""'',.\s]*/g) || [translate]
-        this.setData({ translateParts: parts })
-      } else {
-        this.setData({ translateParts: ['暂无翻译'] })
-      }
-    }
-  },
   methods: {
     // 点击原文片段触发
     handleTap(e) {
