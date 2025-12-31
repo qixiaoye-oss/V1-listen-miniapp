@@ -16,7 +16,7 @@ Component({
         success: function (res) {
           if (res.brand == 'iPhone') {
             that.setData({
-              padtop: 9
+              padtop: 5
             })
           }
         }
@@ -24,7 +24,7 @@ Component({
     }
   },
   data: {
-    height: 50,
+    height: 25,
     showPl: true,
     padtop: 0
   },
@@ -43,7 +43,7 @@ Component({
     },
     linechange(e) {
       this.setData({
-        height: (e.detail.lineCount) * 50
+        height: (e.detail.lineCount) * 25
       })
     },
     inputVal(e) {
