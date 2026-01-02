@@ -96,6 +96,14 @@ module.exports = Behavior({
     },
 
     /**
+     * 清除刷新标记
+     * 在处理完刷新后调用
+     */
+    clearRefreshMark() {
+      this.setData({ _needRefresh: false })
+    },
+
+    /**
      * 重置加载状态
      * 用于下拉刷新等场景
      */
@@ -133,6 +141,19 @@ module.exports = Behavior({
     isFromBackground() {
       const app = getApp()
       return app._isFromBackground || false
+    },
+
+    /**
+     * 检查是否从图片预览返回
+     * @returns {boolean}
+     */
+    isFromImagePreview() {
+      const app = getApp()
+      if (app._isFromImagePreview) {
+        app._isFromImagePreview = false
+        return true
+      }
+      return false
     },
 
     /**
