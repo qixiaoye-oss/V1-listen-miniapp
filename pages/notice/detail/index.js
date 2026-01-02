@@ -49,8 +49,8 @@ Page({
   listData() {
     api.request(this, `/popular/science/v1/detail/${this.options.id}`, {}, true).then(() => {
       this.markLoaded()
-      this.setDataReady()
       this.finishLoading()
+      this.setDataReady()
       // 延迟计算，确保按钮组渲染完成
       wx.nextTick(() => {
         this.updateButtonGroupHeight()

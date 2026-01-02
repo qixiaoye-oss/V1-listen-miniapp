@@ -40,10 +40,13 @@ Page({
     api.request(this, '/popular/science/v1/miniapp/list', {}, true)
       .then(() => {
         this.markLoaded()
+        this.finishLoading()
         this.setDataReady()
       })
-      .catch(() => { pageGuard.showRetry(this) })
-      .finally(() => { this.finishLoading() })
+      .catch(() => {
+        this.finishLoading()
+        pageGuard.showRetry(this)
+      })
   },
   // ===========数据获取 End===========
 })

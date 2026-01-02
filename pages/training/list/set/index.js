@@ -148,6 +148,7 @@ Page({
         _this.setData(res, () => {
           _this.markLoaded()
           _this.finishLoading()
+          _this.setDataReady()
         })
       }
     }).catch(() => {

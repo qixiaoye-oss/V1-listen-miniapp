@@ -58,8 +58,8 @@ Page({
         // 首次加载：直接 setData
         _this.setData(res, () => {
           _this.markLoaded()
-          _this.setDataReady()
           _this.finishLoading()
+          _this.setDataReady()
         })
       }
     }).catch(() => {

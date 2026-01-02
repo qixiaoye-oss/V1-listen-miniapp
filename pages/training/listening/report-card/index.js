@@ -52,8 +52,8 @@ Page({
   listQuestion(isPull) {
     const _this = this
     api.request(this, `/result/v1/result/${this.options.resultId}`, {}, isPull).then(() => {
-      _this.setDataReady()
       _this.finishLoading()
+      _this.setDataReady()
       // 延迟计算，确保按钮组渲染完成
       wx.nextTick(() => {
         _this.updateButtonGroupHeight()

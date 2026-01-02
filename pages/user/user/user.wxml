@@ -3,8 +3,8 @@
 <template is="pageLoading" data="{{loading, loadProgress}}" />
 <template is="loadError" data="{{loadError}}" />
 <!-- 骨架屏 -->
-<skeleton type="user" loading="{{loading}}" wx:if="{{!loadError}}" />
-<view class="user-page" wx:if="{{!loading && !loadError}}">
+<skeleton type="user" loading="{{!_isDataReady}}" wx:if="{{!loadError}}" />
+<view class="user-page" wx:if="{{_isDataReady && !loadError}}">
   <view class="user-info">
     <image class="user__avatar" src="{{user.headUrl}}" mode="cover" />
     <view class="user__nickname">

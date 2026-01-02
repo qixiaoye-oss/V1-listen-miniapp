@@ -33,9 +33,10 @@ Page({
     this.hideLoadError()
     api.request(this, '/user/v1/user/info', {}, true).then(() => {
       this.markLoaded()
-      this.setDataReady()
       this.finishLoading()
+      this.setDataReady()
     }).catch(() => {
+      this.finishLoading()
       pageGuard.showRetry(this)
     })
   },
