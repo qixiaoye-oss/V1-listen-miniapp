@@ -2,8 +2,8 @@
 <template is="pageLoading" data="{{loading, loadProgress}}" />
 <wxs src="/utils/util.wxs" module="wxsUtil" />
 <!-- 骨架屏 -->
-<skeleton type="list" loading="{{loading}}" rows="5" />
-<scroll-view class="base_view" scroll-y scroll-into-view="{{scrollIntoId}}" scroll-with-animation wx:if="{{!loading}}">
+<skeleton type="list" loading="{{!_isDataReady}}" rows="5" />
+<scroll-view class="base_view" scroll-y scroll-into-view="{{scrollIntoId}}" scroll-with-animation wx:if="{{_isDataReady}}">
   <view class="layout_grid">
     <block wx:for="{{list}}" wx:key="id" wx:for-item="item" wx:for-index="idx">
       <view id="ID{{item.id}}" class="list_container {{scrollIntoId === 'ID'+item.id ? 'select' : ''}}">
