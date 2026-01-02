@@ -1,10 +1,10 @@
 /**
- * 加载提示样式
+ * 加载提示样式（与参考项目 V1-speak-miniapp 保持一致）
  * 文字 + shimmer 流光动效
  */
 
-/* 容器：全屏居中 */
-.loading-hint {
+/* 容器：全屏居中，向上偏移以适应底部导航栏 */
+.init-loading {
   position: fixed;
   top: 0;
   left: 0;
@@ -13,22 +13,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: 100rpx;
   background: #fff;
   z-index: 9998;
 }
 
-.loading-hint__content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-
 /* 文字 shimmer 流光效果 */
-.loading-hint__text {
+.init-loading__text {
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 2px;
+  color: #999;
 
   /* 渐变背景 */
   background: linear-gradient(
@@ -46,11 +41,11 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  /* 流光动画 */
-  animation: loading-hint-shimmer 2s ease-in-out infinite;
+  /* 流光动画 - 1.5s 与参考项目一致 */
+  animation: shimmer 1.5s ease-in-out infinite;
 }
 
-@keyframes loading-hint-shimmer {
+@keyframes shimmer {
   0% {
     background-position: 100% 0;
   }
