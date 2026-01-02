@@ -171,6 +171,14 @@ App({
     }
     // 自动登录
     const _this = this
+
+    // 清除旧 token，避免旧 token 干扰新的登录请求
+    const oldToken = wx.getStorageSync('token')
+    if (oldToken) {
+      console.log('[Login] 清除旧 token')
+      wx.removeStorageSync('token')
+    }
+
     wx.login().then(data => {
       api.request(_this, '/user/v1/login', {
         code: data.code
