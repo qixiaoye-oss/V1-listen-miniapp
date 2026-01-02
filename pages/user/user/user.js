@@ -2,16 +2,21 @@ const api = getApp().api
 const pageGuard = require('../../../behaviors/pageGuard')
 const pageLoading = require('../../../behaviors/pageLoading')
 const loadError = require('../../../behaviors/loadError')
+const smartLoading = require('../../../behaviors/smartLoading')
 
 Page({
-  behaviors: [pageGuard.behavior, pageLoading, loadError],
+  behaviors: [pageGuard.behavior, pageLoading, loadError, smartLoading],
   data: {
     version: '1.0.0',
     permission_duration: '免费版'
   },
   onShow: function () {
-    this.getUser(this)
+    // 用户信息只加载一次
+    if (this.data._hasLoaded) {
+      return
+    }
     this.startLoading()
+    this.getUser()
     const accountInfo = wx.getAccountInfoSync()
     const version = accountInfo.miniProgram.version
     if (version) {
@@ -27,6 +32,7 @@ Page({
   getUser() {
     this.hideLoadError()
     api.request(this, '/user/v1/user/info', {}, true).then(() => {
+      this.markLoaded()
       this.setDataReady()
       this.finishLoading()
     }).catch(() => {
