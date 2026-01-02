@@ -2,11 +2,12 @@ const api = getApp().api
 const audioApi = getApp().audioApi
 const pageGuard = require('../../../../behaviors/pageGuard')
 const audioPageLoading = require('../../../../behaviors/audioPageLoading')
+const smartLoading = require('../../../../behaviors/smartLoading')
 
 let audioContext
 
 Page({
-  behaviors: [pageGuard.behavior, audioPageLoading],
+  behaviors: [pageGuard.behavior, audioPageLoading, smartLoading],
   data: {
     list: [],
     detail: null,
@@ -30,6 +31,8 @@ Page({
     this.isOpenPc()
   },
   onUnload() {
+    // 通知 set 页面需要静默刷新
+    this.notifyParentRefresh()
     this.stopAudio()
     if (audioContext) {
       audioContext.destroy()

@@ -4,8 +4,8 @@
 <template is="loadError" data="{{loadError}}" />
 <wxs src="/utils/util.wxs" module="wxsUtil" />
 <!-- 骨架屏 -->
-<skeleton type="list" loading="{{loading}}" rows="5" wx:if="{{!loadError}}" />
-<view class="album-list" wx:if="{{!loading && !loadError}}">
+<skeleton type="list" loading="{{!_isDataReady}}" rows="5" wx:if="{{!loadError}}" />
+<view class="album-list" wx:if="{{_isDataReady && !loadError}}">
   <!-- <view class="album-settings-entry" bind:tap="toPage" hover-class="tap-active" hover-stay-time="100">
     <view class="album-settings-entry__button" style="background: rgba(49, 159, 231, 0.15);">
       <image src="/images/v2/line.png"></image>

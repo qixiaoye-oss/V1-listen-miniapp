@@ -1,6 +1,9 @@
 <import src="/templates/page-loading.wxml" />
 <import src="/templates/load-error.wxml" />
+<import src="/templates/loading-hint.wxml" />
 <view class="home">
+  <!-- 登录期间的加载提示（文字+shimmer） -->
+  <template is="loadingHint" data="{{showHint, hintText}}" />
   <template is="pageLoading" data="{{loading, loadProgress}}" />
   <template is="loadError" data="{{loadError}}" />
   <!-- 骨架屏 -->

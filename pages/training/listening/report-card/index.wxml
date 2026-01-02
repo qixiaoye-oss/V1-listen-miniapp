@@ -2,7 +2,7 @@
 <template is="pageLoading" data="{{loading, loadProgress}}" />
 <wxs src="/utils/util.wxs" module="wxsUtil" />
 <!-- 骨架屏 -->
-<skeleton type="list" loading="{{loading}}" rows="5" />
+<skeleton type="list" loading="{{!_isDataReady}}" rows="5" />
 <view class="report-card-page" wx:if="{{_isDataReady}}">
   <!-- padding-bottom = buttonGroupHeight，确保内容底边距离按钮组顶边 15px -->
   <view class="report-card-page__content" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : 'var(--button-group-total-height-single-with-hint)'}}">

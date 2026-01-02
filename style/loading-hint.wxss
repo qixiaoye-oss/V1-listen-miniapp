@@ -1,0 +1,35 @@
+/**
+ * 加载提示样式（与参考项目 V1-speak-miniapp 完全一致）
+ * 文字 + shimmer 流光动效
+ */
+
+.init-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 100rpx;
+}
+
+.init-loading__text {
+  font-size: 15px;
+  color: transparent;
+  background: linear-gradient(90deg, #999 0%, #999 40%, #ccc 50%, #999 60%, #999 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}

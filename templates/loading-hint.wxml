@@ -1,0 +1,19 @@
+<!--
+  加载提示模板（与参考项目 V1-speak-miniapp 保持一致）
+  用于登录/初始化期间显示"文字+shimmer"效果
+
+  使用方式：
+  在页面 wxml 中直接使用：
+  <view class="init-loading" wx:if="{{!loading && !list}}">
+    <text class="init-loading__text">{{loadingText}}</text>
+  </view>
+
+  或使用模板：
+  <import src="/templates/loading-hint.wxml" />
+  <template is="loadingHint" data="{{showHint, hintText}}" />
+-->
+<template name="loadingHint">
+  <view class="init-loading" wx:if="{{showHint}}">
+    <text class="init-loading__text">{{hintText || '正在加载...'}}</text>
+  </view>
+</template>
