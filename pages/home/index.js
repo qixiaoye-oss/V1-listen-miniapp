@@ -132,9 +132,9 @@ Page({
     }
 
     // 标记加载完成
+    this.setDataReady()
     this.markLoaded()
     this.finishLoading()
-    this.setDataReady()
 
     // 标记已使用预加载
     this.setData({ _usedPreload: true })
@@ -194,12 +194,12 @@ Page({
   listData() {
     this.hideLoadError()
     api.request(this, '/home/v1/list', {}, true).then(() => {
-      this.markLoaded()
-      this.finishLoading()
       this.setDataReady()
+      this.markLoaded()
     }).catch(() => {
-      this.finishLoading()
       pageGuard.showRetry(this)
+    }).finally(() => {
+      this.finishLoading()
     })
   },
 
