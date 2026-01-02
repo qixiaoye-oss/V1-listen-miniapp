@@ -1,14 +1,22 @@
 const api = getApp().api
 const pageGuard = require('../../../../behaviors/pageGuard')
 const pageLoading = require('../../../../behaviors/pageLoading')
+const smartLoading = require('../../../../behaviors/smartLoading')
+const { diffSetData } = require('../../../../utils/diff')
 
 Page({
-  behaviors: [pageGuard.behavior, pageLoading],
+  behaviors: [pageGuard.behavior, pageLoading, smartLoading],
   data: {},
   // ===========生命周期 Start===========
   onShow() {
-    this.startLoading()
-    this.listData()
+    const loadType = this.shouldLoad()
+    if (loadType === 'full') {
+      this.startLoading()
+      this.listData()
+    } else if (loadType === 'silent') {
+      this.listData(true) // 静默刷新
+    }
+    // loadType === 'none' 时不刷新
   },
   // ===========生命周期 End===========
   // ===========业务操作 Start===========
@@ -125,13 +133,28 @@ Page({
   },
   // ===========业务操作 End===========
   // ===========数据获取 Start===========
-  listData() {
+  listData(isSilent = false) {
+    const _this = this
     api.request(this, '/unit/v1/list', {
       ...this.options
-    }, true).then(() => {
-      this.finishLoading()
+    }, !isSilent).then((res) => {
+      if (isSilent) {
+        // 静默刷新：使用 diff 更新，避免闪烁
+        diffSetData(_this, res, () => {
+          _this.markLoaded()
+        })
+      } else {
+        // 首次加载：直接 setData
+        _this.setData(res, () => {
+          _this.markLoaded()
+          _this.finishLoading()
+        })
+      }
     }).catch(() => {
-      pageGuard.goBack(this)
+      if (!isSilent) {
+        pageGuard.goBack(_this)
+      }
+      // 静默刷新失败不处理
     })
   },
   // 删除记录
