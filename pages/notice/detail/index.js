@@ -2,17 +2,21 @@ const api = getApp().api
 const pageGuard = require('../../../behaviors/pageGuard')
 const pageLoading = require('../../../behaviors/pageLoading')
 const buttonGroupHeight = require('../../../behaviors/button-group-height')
+const smartLoading = require('../../../behaviors/smartLoading')
 
 Page({
-  behaviors: [pageGuard.behavior, pageLoading, buttonGroupHeight],
+  behaviors: [pageGuard.behavior, pageLoading, buttonGroupHeight, smartLoading],
   data: {
     usefulCount: 0,
     shaking: false
   },
   // ===========生命周期 Start===========
-  onShow() {
+  onLoad() {
     this.startLoading()
     this.listData()
+  },
+  onShow() {
+    // 静态内容，只在 onLoad 加载一次
   },
   onShareAppMessage() {
     return api.share('考雅听力专项题库', this)
@@ -44,6 +48,7 @@ Page({
   // 访问接口获取数据
   listData() {
     api.request(this, `/popular/science/v1/detail/${this.options.id}`, {}, true).then(() => {
+      this.markLoaded()
       this.setDataReady()
       this.finishLoading()
       // 延迟计算，确保按钮组渲染完成
