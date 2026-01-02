@@ -14,7 +14,23 @@ Page({
   // ===========生命周期 Start===========
   onLoad: function (options) {
     this.startLoading()
-    this.getDetail(true)
+
+    // 尝试从 Storage 读取缓存
+    const cacheKey = `article_${options.partId}`
+    const cachedData = wx.getStorageSync(cacheKey)
+
+    if (cachedData) {
+      // 有缓存，直接使用
+      this.setData(cachedData)
+      this.setDataReady()
+      this.finishLoading()
+      wx.nextTick(() => {
+        this.updateButtonGroupHeight()
+      })
+    } else {
+      // 无缓存，请求数据
+      this.getDetail(true)
+    }
   },
   // ===========生命周期 End===========
   // ===========业务操作 Start===========
@@ -25,7 +41,11 @@ Page({
   // ===========数据获取 Start===========
   // 访问接口获取数据
   getDetail(isPull) {
-    api.request(this, `/part/v1/article/${this.options.partId}`, {}, isPull, false).then(() => {
+    api.request(this, `/part/v1/article/${this.options.partId}`, {}, isPull, false).then((res) => {
+      // 存入 Storage 缓存
+      const cacheKey = `article_${this.options.partId}`
+      wx.setStorageSync(cacheKey, res)
+
       this.setDataReady()
       this.finishLoading()
       // 延迟计算，确保按钮组渲染完成

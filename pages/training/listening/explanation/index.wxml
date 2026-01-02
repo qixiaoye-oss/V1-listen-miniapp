@@ -4,7 +4,7 @@
 <template is="audioLoading" data="{{audioDownProgress}}" />
 <wxs src="/utils/util.wxs" module="wxsUtil" />
 <!-- 骨架屏 -->
-<skeleton type="detail" loading="{{loading}}" />
+<skeleton type="detail" loading="{{!_isDataReady}}" />
 <view class="explain" wx:if="{{_isDataReady}}">
   <view class="explain__question">
     <view>

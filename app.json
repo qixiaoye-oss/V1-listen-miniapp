@@ -16,8 +16,7 @@
     "pages/training/listening/sentence/index",
     "pages/training/listening/intensive-notes/index",
     "pages/user/user/user",
-    "pages/user/login/login",
-    "pages/setting/module/index"
+    "pages/user/login/login"
   ],
   "window": {
     "backgroundColor": "#ffffff",

@@ -1,7 +1,7 @@
 <import src="/templates/page-loading.wxml" />
 <template is="pageLoading" data="{{loading, loadProgress}}" />
 <!-- 骨架屏 -->
-<skeleton type="detail" loading="{{loading}}" />
+<skeleton type="detail" loading="{{!_isDataReady}}" />
 <view class="article-page" wx:if="{{_isDataReady}}">
   <!-- padding-bottom = buttonGroupHeight，确保内容底边距离按钮组顶边 15px -->
   <view class="article-page__content" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : 'var(--button-group-total-height-single)'}}">
