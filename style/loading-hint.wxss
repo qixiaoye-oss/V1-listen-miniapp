@@ -1,0 +1,60 @@
+/**
+ * 加载提示样式
+ * 文字 + shimmer 流光动效
+ */
+
+/* 容器：全屏居中 */
+.loading-hint {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  z-index: 9998;
+}
+
+.loading-hint__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* 文字 shimmer 流光效果 */
+.loading-hint__text {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 2px;
+
+  /* 渐变背景 */
+  background: linear-gradient(
+    90deg,
+    #999 0%,
+    #999 40%,
+    var(--theme-color, #3478F6) 50%,
+    #999 60%,
+    #999 100%
+  );
+  background-size: 200% 100%;
+
+  /* 文字裁剪 - 让背景只显示在文字上 */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* 流光动画 */
+  animation: loading-hint-shimmer 2s ease-in-out infinite;
+}
+
+@keyframes loading-hint-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}

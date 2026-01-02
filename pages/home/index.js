@@ -15,10 +15,24 @@ Page({
       url: []
     },
     // 标记是否使用了预加载数据
-    _usedPreload: false
+    _usedPreload: false,
+    // 加载提示状态
+    showHint: true,
+    hintText: '正在连接服务器...'
   },
 
   // ===========生命周期 Start===========
+
+  /**
+   * 页面加载时显示加载提示
+   */
+  onLoad() {
+    // 页面加载时显示 loading hint
+    this.setData({
+      showHint: true,
+      hintText: '正在连接服务器...'
+    })
+  },
 
   /**
    * 页面显示时的加载逻辑
@@ -36,14 +50,27 @@ Page({
 
     console.log('[Home] onShowLogin, loadType:', loadType, 'preloadStatus:', app.homePreloadStatus)
 
+    // 更新提示文字
+    this.setData({ hintText: '正在加载数据...' })
+
     if (loadType === 'full') {
       // 首次加载：尝试使用预加载数据
       this._handleFirstLoad(app)
     } else if (loadType === 'silent') {
       // 静默刷新：后台更新数据，无视觉反馈
+      this._hideLoadingHint()
       this._handleSilentRefresh()
+    } else {
+      // 无需刷新，隐藏提示
+      this._hideLoadingHint()
     }
-    // loadType === 'none': 无需刷新，保持现状
+  },
+
+  /**
+   * 隐藏加载提示
+   */
+  _hideLoadingHint() {
+    this.setData({ showHint: false })
   },
 
   /**
@@ -55,24 +82,29 @@ Page({
     if (app.homePreloadStatus === 'success' && app.homePreloadData) {
       // 预加载成功，直接使用缓存数据
       console.log('[Home] Using preloaded data')
+      this.setData({ hintText: '即将完成...' })
       this._applyPreloadData(app)
     } else if (app.homePreloadStatus === 'loading' && app.homePreloadPromise) {
       // 预加载进行中，等待完成
       console.log('[Home] Waiting for preload...')
-      this.startLoading()
+      this.setData({ hintText: '正在获取数据...' })
       app.homePreloadPromise
         .then(() => {
+          this.setData({ hintText: '即将完成...' })
           this._applyPreloadData(app)
         })
         .catch(() => {
           // 预加载失败，降级到普通加载
           console.log('[Home] Preload failed, fallback to normal load')
+          this._hideLoadingHint()
+          this.startLoading()
           this.listData()
           this.listPopularScienceData()
         })
     } else {
       // 无预加载数据，正常加载
       console.log('[Home] No preload data, normal load')
+      this._hideLoadingHint()
       this.startLoading()
       this.listData()
       this.listPopularScienceData()
@@ -85,6 +117,9 @@ Page({
   _applyPreloadData(app) {
     const homeData = app.homePreloadData
     const popularScienceData = app.popularSciencePreloadData
+
+    // 隐藏加载提示
+    this._hideLoadingHint()
 
     // 设置首页数据
     if (homeData) {

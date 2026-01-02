@@ -6,6 +6,7 @@
 @import "style/skeleton.wxss";
 @import "style/button-group.wxss";
 @import "style/tag.wxss";
+@import "style/loading-hint.wxss";
 
 page {
   background-color: #ffffff;

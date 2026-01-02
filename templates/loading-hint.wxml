@@ -1,0 +1,15 @@
+<!--
+  加载提示模板
+  用于登录/初始化期间显示"文字+shimmer"效果
+
+  使用方式：
+  <import src="/templates/loading-hint.wxml" />
+  <template is="loadingHint" data="{{showHint, hintText}}" />
+-->
+<template name="loadingHint">
+  <view class="loading-hint" wx:if="{{showHint}}">
+    <view class="loading-hint__content">
+      <view class="loading-hint__text">{{hintText || '正在加载...'}}</view>
+    </view>
+  </view>
+</template>
