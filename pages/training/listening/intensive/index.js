@@ -268,6 +268,7 @@ Page({
 
   // 跳转到句子列表（使用安全导航）
   toList: function () {
+    this.stopAudio()
     const { swiperCurrent, list } = this.data
     this.navigateTo('../sentence/index?sid=' + this.options.setId + '&paragraphId=' + list[swiperCurrent].id)
   },
