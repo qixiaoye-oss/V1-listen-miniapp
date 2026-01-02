@@ -3,7 +3,6 @@ const pageGuard = require('../../behaviors/pageGuard')
 const pageLoading = require('../../behaviors/pageLoading')
 const loadError = require('../../behaviors/loadError')
 const smartLoading = require('../../behaviors/smartLoading')
-const { diffSetData } = require('../../utils/diff')
 
 Page({
   behaviors: [pageGuard.behavior, pageLoading, loadError, smartLoading],
@@ -36,7 +35,7 @@ Page({
 
   /**
    * 页面显示时的加载逻辑
-   * 使用 smart loading 区分：首次加载、静默刷新、无需刷新
+   * 首页只在首次加载时请求数据，后续不刷新
    */
   onShow() { },
 
@@ -46,24 +45,22 @@ Page({
    */
   onShowLogin() {
     const app = getApp()
-    const loadType = this.shouldLoad()
 
-    console.log('[Home] onShowLogin, loadType:', loadType, 'preloadStatus:', app.homePreloadStatus)
+    // 首页只在首次加载，后续不刷新
+    const isFirstLoad = !this.data._hasLoaded
+    console.log('[Home] onShowLogin, isFirstLoad:', isFirstLoad, 'preloadStatus:', app.homePreloadStatus)
+
+    if (!isFirstLoad) {
+      // 非首次加载，直接隐藏提示返回
+      this._hideLoadingHint()
+      return
+    }
 
     // 更新提示文字
     this.setData({ hintText: '正在加载数据...' })
 
-    if (loadType === 'full') {
-      // 首次加载：尝试使用预加载数据
-      this._handleFirstLoad(app)
-    } else if (loadType === 'silent') {
-      // 静默刷新：后台更新数据，无视觉反馈
-      this._hideLoadingHint()
-      this._handleSilentRefresh()
-    } else {
-      // 无需刷新，隐藏提示
-      this._hideLoadingHint()
-    }
+    // 首次加载：尝试使用预加载数据
+    this._handleFirstLoad(app)
   },
 
   /**
@@ -98,16 +95,14 @@ Page({
           console.log('[Home] Preload failed, fallback to normal load')
           this._hideLoadingHint()
           this.startLoading()
-          this.listData()
-          this.listPopularScienceData()
+          this._loadAllData()
         })
     } else {
       // 无预加载数据，正常加载
       console.log('[Home] No preload data, normal load')
       this._hideLoadingHint()
       this.startLoading()
-      this.listData()
-      this.listPopularScienceData()
+      this._loadAllData()
     }
   },
 
@@ -121,36 +116,21 @@ Page({
     // 隐藏加载提示
     this._hideLoadingHint()
 
-    // 设置首页数据
-    if (homeData) {
-      this.setData(homeData)
+    // 合并数据一次性设置
+    const updateData = {
+      ...(homeData || {}),
+      ...(popularScienceData || {}),
+      _usedPreload: true
     }
-
-    // 设置科普数据
-    if (popularScienceData) {
-      this.setData(popularScienceData)
-    }
+    this.setData(updateData)
 
     // 标记加载完成
     this.setDataReady()
     this.markLoaded()
     this.finishLoading()
 
-    // 标记已使用预加载
-    this.setData({ _usedPreload: true })
-
     // 清除预加载缓存（避免下次使用过期数据）
     app.clearHomePreloadCache()
-  },
-
-  /**
-   * 处理静默刷新
-   * 后台请求数据，使用 diff 更新，避免闪烁
-   */
-  _handleSilentRefresh() {
-    console.log('[Home] Silent refresh')
-    this._silentListData()
-    this._silentListPopularScienceData()
   },
 
   onShareAppMessage() {
@@ -189,76 +169,36 @@ Page({
   // ===========数据获取 Start===========
 
   /**
-   * 获取首页列表数据（带骨架屏）
+   * 并行加载所有数据（使用 Promise.all）
+   * 合并首页数据和科普数据请求，提升加载速度
    */
-  listData() {
+  _loadAllData() {
     this.hideLoadError()
-    api.request(this, '/home/v1/list', {}, true).then(() => {
-      this.setDataReady()
-      this.markLoaded()
-    }).catch(() => {
-      pageGuard.showRetry(this)
-    }).finally(() => {
-      this.finishLoading()
-    })
-  },
 
-  /**
-   * 静默获取首页列表数据
-   * 使用 diff 更新，避免页面闪烁
-   */
-  _silentListData() {
-    const _this = this
-    wx.request({
-      url: 'https://listen.jingying.vip/api/listen/home/v1/list',
-      method: 'GET',
-      header: {
-        'Content-Type': 'application/json',
-        'Token': wx.getStorageSync('token')
-      },
-      success(res) {
-        if (res.data.code == '200' && res.data.data) {
-          // 使用 diff 更新，仅更新变化字段
-          diffSetData(_this, res.data.data, () => {
-            _this.markLoaded()
-            console.log('[Home] Silent refresh completed')
-          })
-        }
-      },
-      fail() {
-        // 静默刷新失败，不做处理
-        console.log('[Home] Silent refresh failed')
-      }
-    })
-  },
+    const promises = [
+      // 科普数据（非必需，失败返回空对象）
+      api.request(this, '/popular/science/v1/miniapp/home', {}, true, 'GET', false)
+        .catch(() => ({})),
+      // 首页主数据
+      api.request(this, '/home/v1/list', {}, true, 'GET', false)
+    ]
 
-  /**
-   * 获取科普数据
-   */
-  listPopularScienceData() {
-    api.request(this, '/popular/science/v1/miniapp/home', {}, true).catch(() => {
-      // 科普数据非必需，静默失败
-    })
-  },
-
-  /**
-   * 静默获取科普数据
-   */
-  _silentListPopularScienceData() {
-    const _this = this
-    wx.request({
-      url: 'https://listen.jingying.vip/api/listen/popular/science/v1/miniapp/home',
-      method: 'GET',
-      header: {
-        'Content-Type': 'application/json',
-        'Token': wx.getStorageSync('token')
-      },
-      success(res) {
-        if (res.data.code == '200' && res.data.data) {
-          diffSetData(_this, res.data.data)
-        }
-      }
-    })
+    Promise.all(promises)
+      .then(([scienceData, homeData]) => {
+        // 合并数据一次性 setData
+        this.setData({
+          ...scienceData,
+          ...homeData
+        })
+        this.setDataReady()
+        this.markLoaded()
+      })
+      .catch(() => {
+        pageGuard.showRetry(this)
+      })
+      .finally(() => {
+        this.finishLoading()
+      })
   },
 
   listPopularScienceByModule() {
@@ -276,8 +216,7 @@ Page({
   retryLoad() {
     this.resetLoadState()
     this.startLoading()
-    this.listData()
-    this.listPopularScienceData()
+    this._loadAllData()
   },
   // ===========数据获取 End===========
 })
