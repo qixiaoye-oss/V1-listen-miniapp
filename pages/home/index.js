@@ -15,9 +15,8 @@ Page({
     },
     // 标记是否使用了预加载数据
     _usedPreload: false,
-    // 加载提示状态
-    showHint: true,
-    hintText: '正在连接服务器...'
+    // 加载提示文字
+    loadingText: '正在连接服务器...'
   },
 
   // ===========生命周期 Start===========
@@ -26,11 +25,8 @@ Page({
    * 页面加载时显示加载提示
    */
   onLoad() {
-    // 页面加载时显示 loading hint
-    this.setData({
-      showHint: true,
-      hintText: '正在连接服务器...'
-    })
+    // 页面加载时设置初始提示文字
+    this.setData({ loadingText: '正在连接服务器...' })
   },
 
   /**
@@ -51,23 +47,14 @@ Page({
     console.log('[Home] onShowLogin, isFirstLoad:', isFirstLoad, 'preloadStatus:', app.homePreloadStatus)
 
     if (!isFirstLoad) {
-      // 非首次加载，直接隐藏提示返回
-      this._hideLoadingHint()
       return
     }
 
     // 更新提示文字
-    this.setData({ hintText: '正在加载数据...' })
+    this.setData({ loadingText: '正在加载数据...' })
 
     // 首次加载：尝试使用预加载数据
     this._handleFirstLoad(app)
-  },
-
-  /**
-   * 隐藏加载提示
-   */
-  _hideLoadingHint() {
-    this.setData({ showHint: false })
   },
 
   /**
@@ -79,28 +66,26 @@ Page({
     if (app.homePreloadStatus === 'success' && app.homePreloadData) {
       // 预加载成功，直接使用缓存数据
       console.log('[Home] Using preloaded data')
-      this.setData({ hintText: '即将完成...' })
+      this.setData({ loadingText: '即将完成...' })
       this._applyPreloadData(app)
     } else if (app.homePreloadStatus === 'loading' && app.homePreloadPromise) {
       // 预加载进行中，等待完成
       console.log('[Home] Waiting for preload...')
-      this.setData({ hintText: '正在获取数据...' })
+      this.setData({ loadingText: '正在获取数据...' })
       app.homePreloadPromise
         .then(() => {
-          this.setData({ hintText: '即将完成...' })
+          this.setData({ loadingText: '即将完成...' })
           this._applyPreloadData(app)
         })
         .catch(() => {
           // 预加载失败，降级到普通加载
           console.log('[Home] Preload failed, fallback to normal load')
-          this._hideLoadingHint()
           this.startLoading()
           this._loadAllData()
         })
     } else {
       // 无预加载数据，正常加载
       console.log('[Home] No preload data, normal load')
-      this._hideLoadingHint()
       this.startLoading()
       this._loadAllData()
     }
@@ -112,9 +97,6 @@ Page({
   _applyPreloadData(app) {
     const homeData = app.homePreloadData
     const popularScienceData = app.popularSciencePreloadData
-
-    // 隐藏加载提示
-    this._hideLoadingHint()
 
     // 合并数据一次性设置
     const updateData = {
