@@ -98,10 +98,26 @@ Page({
     const homeData = app.homePreloadData
     const popularScienceData = app.popularSciencePreloadData
 
+    // 处理科普数据分列
+    let popularScienceColumns = null
+    if (popularScienceData && popularScienceData.popularScience && popularScienceData.popularScience.list) {
+      popularScienceColumns = this._splitToColumns(popularScienceData.popularScience.list)
+    }
+
+    // 处理分组数据分列（QUAD_GRID模式）
+    if (homeData && homeData.list) {
+      homeData.list.forEach(group => {
+        if (group.layoutMode === 'QUAD_GRID' && group.list) {
+          group.columns = this._splitToColumns(group.list)
+        }
+      })
+    }
+
     // 合并数据一次性设置
     const updateData = {
       ...(homeData || {}),
       ...(popularScienceData || {}),
+      ...(popularScienceColumns ? { popularScienceColumns } : {}),
       _usedPreload: true
     }
     this.setData(updateData)
@@ -120,7 +136,48 @@ Page({
   },
   // ===========生命周期 End===========
 
+  // ===========工具方法 Start===========
+
+  /**
+   * 将列表数据分为左右两列（瀑布流布局）
+   */
+  _splitToColumns(list) {
+    const leftColumn = []
+    const rightColumn = []
+    list.forEach((item, index) => {
+      if (index % 2 === 0) {
+        leftColumn.push(item)
+      } else {
+        rightColumn.push(item)
+      }
+    })
+    return { leftColumn, rightColumn }
+  },
+
+  // ===========工具方法 End===========
+
   // ===========业务操作 Start===========
+
+  /**
+   * 小程序跳转
+   */
+  onMiniappLinkTap(e) {
+    const type = e.currentTarget.dataset.type
+    const appIdMap = {
+      kouyu: 'wxb654ae86481b7566',   // 口语开源题库
+      jijing: 'wx236ffece314ca802'   // 机经开源题库
+    }
+    const appId = appIdMap[type]
+    if (appId) {
+      wx.navigateToMiniProgram({
+        appId: appId,
+        fail: () => {
+          wx.showToast({ title: '跳转失败', icon: 'none' })
+        }
+      })
+    }
+  },
+
   toChildPage({ currentTarget: { dataset: { id, type, isInside } } }) {
     if (isInside === '0') {
       this.listPopularScienceByModule()
@@ -167,10 +224,26 @@ Page({
 
     Promise.all(promises)
       .then(([scienceData, homeData]) => {
+        // 处理科普数据分列
+        let popularScienceColumns = null
+        if (scienceData && scienceData.popularScience && scienceData.popularScience.list) {
+          popularScienceColumns = this._splitToColumns(scienceData.popularScience.list)
+        }
+
+        // 处理分组数据分列（QUAD_GRID模式）
+        if (homeData && homeData.list) {
+          homeData.list.forEach(group => {
+            if (group.layoutMode === 'QUAD_GRID' && group.list) {
+              group.columns = this._splitToColumns(group.list)
+            }
+          })
+        }
+
         // 合并数据一次性 setData
         this.setData({
           ...scienceData,
-          ...homeData
+          ...homeData,
+          ...(popularScienceColumns ? { popularScienceColumns } : {})
         })
         this.setDataReady()
         this.markLoaded()
