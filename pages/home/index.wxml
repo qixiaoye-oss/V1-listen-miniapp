@@ -1,38 +1,50 @@
 <import src="/templates/page-loading.wxml" />
 <import src="/templates/load-error.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<template is="loadError" data="{{loadError}}" />
+
 <view class="home">
   <!-- 登录期间的加载提示（文字+shimmer） -->
   <view class="init-loading" wx:if="{{!loading && !_isDataReady}}">
     <text class="init-loading__text">{{loadingText || '正在加载...'}}</text>
   </view>
-  <template is="pageLoading" data="{{loading, loadProgress}}" />
-  <template is="loadError" data="{{loadError}}" />
-  <!-- 骨架屏 -->
-  <skeleton type="card" loading="{{loading}}" rows="4" wx:if="{{!loadError}}" />
+
+  <!-- 骨架屏（仅在 loading 阶段显示，与初始化提示互斥） -->
+  <skeleton type="card" loading="{{loading}}" rows="{{6}}" wx:if="{{!loadError}}" />
   <!-- Head Banner + 科普区域（带渐变背景） -->
   <head-banner wx:if="{{_isDataReady}}" title="考雅听力专项题库" subtitle="九分学长出品 | 半开源">
     <!-- 科普内容区域 -->
     <view class="home-main-item home-main-item--science" wx:if="{{popularScience.list.length > 0}}">
       <view class="home-main-item__title" style="color:var(--main-blue-color)">{{popularScience.title}}</view>
-      <view class="home-main-item__content--grid">
-        <block wx:for="{{popularScience.list}}" wx:key="noticeIndex" wx:for-item="notice" wx:for-index="noticeIndex">
-          <tap-action type="card" bind:tap="toNoticePage" data-id="{{notice.id}}">
-            <view class="home-card home-card--notice home-card--science">
-              <view class="home-card__content">
-                <view class="home-card__category" style="color: var(--main-blue-color);">{{notice.groupTitle}}</view>
-                <view class="home-card__body">
-                  <text class="home-card__body-title">{{notice.title}}</text>
-                  <text class="home-card__body-separator"> · </text>
-                  <text class="home-card__body-desc">{{notice.description || '雅思听力备考技巧与策略分享，帮助你更高效地提升听力水平'}}</text>
-                </view>
-                <view class="home-card__meta">
-                  <image src="/images/v2/heart_bt.png"></image>
-                  <view>{{notice.helpfulCount}}人觉得有用</view>
+      <view class="home-main-item__content--waterfall">
+        <!-- 左列 -->
+        <view class="waterfall-column">
+          <block wx:for="{{popularScienceColumns.leftColumn}}" wx:key="id" wx:for-item="notice">
+            <tap-action type="card" bind:tap="toNoticePage" data-id="{{notice.id}}">
+              <view class="home-card home-card--notice home-card--science">
+                <view class="home-card__content">
+                  <view class="home-card__body-title">{{notice.title}}</view>
+                  <view class="home-card__body-desc">{{notice.description || '雅思听力备考技巧与策略分享，帮助你更高效地提升听力水平'}}</view>
+                  <view class="home-card__meta" style="color: var(--main-blue-color);">查看详情</view>
                 </view>
               </view>
-            </view>
-          </tap-action>
-        </block>
+            </tap-action>
+          </block>
+        </view>
+        <!-- 右列 -->
+        <view class="waterfall-column">
+          <block wx:for="{{popularScienceColumns.rightColumn}}" wx:key="id" wx:for-item="notice">
+            <tap-action type="card" bind:tap="toNoticePage" data-id="{{notice.id}}">
+              <view class="home-card home-card--notice home-card--science">
+                <view class="home-card__content">
+                  <view class="home-card__body-title">{{notice.title}}</view>
+                  <view class="home-card__body-desc">{{notice.description || '雅思听力备考技巧与策略分享，帮助你更高效地提升听力水平'}}</view>
+                  <view class="home-card__meta" style="color: var(--main-blue-color);">查看详情</view>
+                </view>
+              </view>
+            </tap-action>
+          </block>
+        </view>
       </view>
       <view class="home-view-all">
         <tap-action icon="next" bind:tap="toNoticeListPage">
@@ -42,6 +54,15 @@
       </view>
     </view>
   </head-banner>
+  <!-- 小程序跳转链接 -->
+  <view class="miniapp-links" wx:if="{{_isDataReady}}">
+    <tap-action type="card" bind:tap="onMiniappLinkTap" data-type="kouyu">
+      <view class="miniapp-link">口语开源题库</view>
+    </tap-action>
+    <tap-action type="card" bind:tap="onMiniappLinkTap" data-type="jijing">
+      <view class="miniapp-link">机经开源题库</view>
+    </tap-action>
+  </view>
   <!-- 主体内容分组 -->
   <block wx:for="{{list}}" wx:key="groupIndex" wx:for-item="group" wx:for-index="groupIndex" wx:if="{{_isDataReady && group.list.length > 0}}">
     <view class="home-main-item" style="background:{{group.colorRgba}}">
@@ -52,7 +73,49 @@
           <view class="home-main-item__notice-text" style="color: {{group.notice.colorRgb}};">{{group.notice.title}}</view>
         </view>
       </tap-action>
-      <view wx:if="{{group.dataType === 'SUBJECT'}}" class="{{group.layoutMode === 'QUAD_GRID' ? 'home-main-item__content--grid' : 'home-main-item__content'}}">
+      <!-- QUAD_GRID 模式 - 瀑布流布局 -->
+      <view class="home-main-item__content--waterfall" wx:if="{{group.dataType === 'SUBJECT' && group.layoutMode === 'QUAD_GRID' && group.columns}}">
+        <!-- 左列 -->
+        <view class="waterfall-column">
+          <block wx:for="{{group.columns.leftColumn}}" wx:key="id" wx:for-item="subject">
+            <tap-action type="card" bind:tap="toChildPage" data-id="{{subject.id}}" data-type="{{subject.dataType}}" data-is-inside="{{group.isInside}}">
+              <view class="home-card home-card--subject" style="background:{{group.colorRgba}};border-color:{{group.colorRgb}};">
+                <view class="home-card__content">
+                  <view class="home-card__header">
+                    <image class="home-card__icon" wx:if="{{subject.iconUrl}}" src="{{subject.iconUrl}}" />
+                    <view class="home-card__title">{{subject.title}}</view>
+                  </view>
+                  <view class="home-card__footer">
+                    <view class="tag tag--dynamic-outline" style="--tag-color:{{group.colorRgb}}">共{{subject.subItemCount}}{{subject.subItemCategory}}</view>
+                    <view class="tag tag--dynamic-solid" style="--tag-color:{{group.color}}" wx:if="{{subject.category}}">{{subject.category}}</view>
+                  </view>
+                </view>
+              </view>
+            </tap-action>
+          </block>
+        </view>
+        <!-- 右列 -->
+        <view class="waterfall-column">
+          <block wx:for="{{group.columns.rightColumn}}" wx:key="id" wx:for-item="subject">
+            <tap-action type="card" bind:tap="toChildPage" data-id="{{subject.id}}" data-type="{{subject.dataType}}" data-is-inside="{{group.isInside}}">
+              <view class="home-card home-card--subject" style="background:{{group.colorRgba}};border-color:{{group.colorRgb}};">
+                <view class="home-card__content">
+                  <view class="home-card__header">
+                    <image class="home-card__icon" wx:if="{{subject.iconUrl}}" src="{{subject.iconUrl}}" />
+                    <view class="home-card__title">{{subject.title}}</view>
+                  </view>
+                  <view class="home-card__footer">
+                    <view class="tag tag--dynamic-outline" style="--tag-color:{{group.colorRgb}}">共{{subject.subItemCount}}{{subject.subItemCategory}}</view>
+                    <view class="tag tag--dynamic-solid" style="--tag-color:{{group.color}}" wx:if="{{subject.category}}">{{subject.category}}</view>
+                  </view>
+                </view>
+              </view>
+            </tap-action>
+          </block>
+        </view>
+      </view>
+      <!-- 普通模式 - 列表布局 -->
+      <view class="home-main-item__content" wx:elif="{{group.dataType === 'SUBJECT'}}">
         <block wx:for="{{group.list}}" wx:key="subjectIndex" wx:for-item="subject" wx:for-index="subjectIndex">
           <tap-action type="card" bind:tap="toChildPage" data-id="{{subject.id}}" data-type="{{subject.dataType}}" data-is-inside="{{group.isInside}}">
             <view class="home-card home-card--subject" style="background:{{group.colorRgba}};border-color:{{group.colorRgb}};">
