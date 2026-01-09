@@ -1,14 +1,16 @@
 <import src="/templates/page-loading.wxml" />
 <import src="/templates/load-error.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<template is="loadError" data="{{loadError}}" />
+
 <view class="home">
   <!-- 登录期间的加载提示（文字+shimmer） -->
   <view class="init-loading" wx:if="{{!loading && !_isDataReady}}">
     <text class="init-loading__text">{{loadingText || '正在加载...'}}</text>
   </view>
-  <template is="pageLoading" data="{{loading, loadProgress}}" />
-  <template is="loadError" data="{{loadError}}" />
-  <!-- 骨架屏 -->
-  <skeleton type="card" loading="{{loading}}" rows="4" wx:if="{{!loadError}}" />
+
+  <!-- 骨架屏（仅在 loading 阶段显示，与初始化提示互斥） -->
+  <skeleton type="card" loading="{{loading}}" rows="{{6}}" wx:if="{{!loadError}}" />
   <!-- Head Banner + 科普区域（带渐变背景） -->
   <head-banner wx:if="{{_isDataReady}}" title="考雅听力专项题库" subtitle="九分学长出品 | 半开源">
     <!-- 科普内容区域 -->
