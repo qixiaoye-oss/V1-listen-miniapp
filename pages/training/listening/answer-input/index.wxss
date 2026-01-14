@@ -23,6 +23,11 @@
   margin-bottom: 15px;
 }
 
+/* 最后一个 parctice 不需要 margin-bottom，由 padding-bottom 的 gap 提供间距 */
+.parctice:last-child {
+  margin-bottom: 0;
+}
+
 .question {
   width: 100%;
   display: flex;
