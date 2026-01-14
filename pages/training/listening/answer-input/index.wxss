@@ -1,3 +1,8 @@
+/* 页面底部间距 - 按钮组固定高度，使用纯 CSS 方案（参考 docs/button-group.md 9.3） */
+page {
+  padding-bottom: var(--button-group-total-height-single);
+}
+
 .header_container {
   border: var(--btn-border-theme-1);
   box-sizing: border-box;
@@ -54,7 +59,3 @@
   flex: 1;
 }
 
-/* 页面内容区域 - 动态 padding-bottom 由 buttonGroupHeight behavior 计算 */
-.page-content {
-  box-sizing: border-box;
-}

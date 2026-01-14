@@ -1,10 +1,9 @@
 const api = getApp().api
 const pageGuard = require('../../../../behaviors/pageGuard')
 const pageLoading = require('../../../../behaviors/pageLoading')
-const buttonGroupHeight = require('../../../../behaviors/button-group-height')
 
 Page({
-  behaviors: [pageGuard.behavior, pageLoading, buttonGroupHeight],
+  behaviors: [pageGuard.behavior, pageLoading],
   data: { saveLoading: false },
   // ===========生命周期 Start===========
   onLoad() {
