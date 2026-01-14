@@ -1,6 +1,6 @@
 <import src="/templates/page-loading.wxml" />
 <template is="pageLoading" data="{{loading, loadProgress}}" />
-<view class="page-content" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : 'var(--button-group-total-height-single)'}}">
+<view class="page-content">
   <block wx:for="{{parts}}" wx:for-item="part" wx:for-index="partIndex" wx:key="id">
     <view class="header_container">
       <view class="header_title">{{part.partNum}}</view>
